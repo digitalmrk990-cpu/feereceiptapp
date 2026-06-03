@@ -1,0 +1,220 @@
+import {
+  formatIndianCurrency,
+  amountInWords,
+  generateReceiptNumber,
+  generateTransactionRef,
+  getFormattedDate,
+} from '../services/pdfGenerator'
+
+export default function ReceiptTemplate({ donor, index, signature }) {
+  const receiptNumber = generateReceiptNumber(index)
+  const transactionRef = generateTransactionRef(index)
+  const formattedDate = getFormattedDate()
+  const amount = Number(donor['Amount']) || 0
+
+  return (
+    <div
+      style={{
+        width: '1000px',
+        margin: '0 auto',
+        background: '#fff',
+        padding: '40px',
+        border: '1px solid #ddd',
+        color: '#222',
+        fontFamily: 'Arial, sans-serif',
+        fontSize: '16px',
+        lineHeight: '1.6',
+      }}
+    >
+      {/* Top Title */}
+      <div style={{ textAlign: 'center', fontSize: '22px', fontWeight: 'bold', marginBottom: '20px' }}>
+        80G Certificate
+      </div>
+
+      {/* Top Section */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+        <div style={{ width: '50%', lineHeight: '1.6', fontSize: '16px' }}>
+          <b>Receipt No.:</b> {receiptNumber}
+          <br /><br />
+          {formattedDate}
+          <br /><br />
+          {donor['Full Name'].toUpperCase()}<br />
+          {donor['Address']}<br />
+          PAN No. - {donor['PAN Card No']}
+        </div>
+
+        <div style={{ width: '42%', textAlign: 'right' }}>
+          <div
+            style={{
+              background: '#e4008d',
+              color: '#fff',
+              display: 'inline-block',
+              padding: '15px 25px',
+              fontSize: '42px',
+              fontWeight: 'bold',
+              marginBottom: '10px',
+            }}
+          >
+            MANN
+          </div>
+          <div style={{ color: '#d10087', fontSize: '34px', fontWeight: 'bold', marginBottom: '10px' }}>
+            Mann Care Foundation
+          </div>
+          <div style={{ color: '#d10087', lineHeight: '1.8', fontSize: '18px' }}>
+            *80G Registration CIN No. U88900MH2026NPL471199<br />
+            TAN No. : MUMM75033A<br />
+            *Trust PAN Card No. AAUCM9048B
+          </div>
+        </div>
+      </div>
+
+      {/* Donor Section */}
+      <div style={{ marginTop: '35px', lineHeight: '1.7', fontSize: '18px' }}>
+        Dear {donor['Full Name'].toUpperCase()}
+        <br /><br />
+        Thank you for making a contribution of {formatIndianCurrency(amount)} to Mann Care Foundation.
+        <br />
+        Please keep this written acknowledgement of your donation for your tax records.
+      </div>
+
+      {/* Signature Section */}
+      <div style={{ marginTop: '40px' }}>
+        <b>For Mann Care Foundation</b>
+        <div style={{ marginTop: '5px' }}>
+          {signature ? (
+            <img
+              src={signature}
+              alt="Authorised Signatory"
+              style={{ height: '60px' }}
+            />
+          ) : (
+            <div style={{ fontSize: '14px', color: '#999', fontStyle: 'italic' }}>
+              (Upload signature above)
+            </div>
+          )}
+        </div>
+        <div style={{ marginTop: '5px', fontWeight: 'bold', fontSize: '18px' }}>
+          (Authorised Signatory)
+        </div>
+      </div>
+
+      <hr style={{ margin: '40px 0 30px', border: 'none', borderTop: '1px solid #999' }} />
+
+      {/* Receipt Section */}
+      <div style={{ textAlign: 'center', fontSize: '32px', fontWeight: 'bold', marginBottom: '25px' }}>
+        DONATION RECEIPT
+      </div>
+
+      <div style={{ fontSize: '20px', textAlign: 'center', marginBottom: '25px' }}>
+        We confirm the receipt of donation from Mr/Ms/Mrs {donor['Full Name'].toUpperCase()} as per details below:-
+      </div>
+
+      <table
+        style={{
+          width: '80%',
+          margin: '0 auto 30px',
+          borderCollapse: 'collapse',
+          fontSize: '18px',
+        }}
+      >
+        <tbody>
+          <tr>
+            <td style={{ border: '1px solid #666', padding: '15px' }}>Donation Date</td>
+            <td style={{ border: '1px solid #666', padding: '15px' }}>{formattedDate}</td>
+          </tr>
+          <tr>
+            <td style={{ border: '1px solid #666', padding: '15px' }}>Transaction Reference Number</td>
+            <td style={{ border: '1px solid #666', padding: '15px' }}>{transactionRef}</td>
+          </tr>
+          <tr>
+            <td style={{ border: '1px solid #666', padding: '15px' }}>Payment Mode</td>
+            <td style={{ border: '1px solid #666', padding: '15px' }}>{donor['Payment Mode']}</td>
+          </tr>
+          <tr>
+            <td style={{ border: '1px solid #666', padding: '15px' }}>Total Contribution Received (Numbers)</td>
+            <td style={{ border: '1px solid #666', padding: '15px' }}>{formatIndianCurrency(amount)}</td>
+          </tr>
+          <tr>
+            <td style={{ border: '1px solid #666', padding: '15px' }}>Total Contribution Received (Words)</td>
+            <td style={{ border: '1px solid #666', padding: '15px' }}>Rupees {amountInWords(amount)}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div style={{ fontSize: '18px', lineHeight: '1.8', marginBottom: '25px' }}>
+        Donations to <span style={{ color: '#d10087', fontWeight: 'bold' }}>Mann Care Foundation</span> qualify for deduction
+        u/s 80G(5) of Income Tax Act 1961 vide Unique Registration Number
+        MCF2026NPL471199 approved on 02 June 2026 which is valid till AY2026-27.
+        This receipt is invalid in case of non-realization of the money instrument
+        or reversal of the credit/debit card charge or reversal of donation amount
+        for any reason. IT PAN: <span style={{ color: '#d10087', fontWeight: 'bold' }}>AAUCM9048B.</span>
+      </div>
+
+      <div style={{ fontSize: '18px', lineHeight: '1.8', marginBottom: '25px' }}>
+        Please note that this is an acknowledgement for the receipt of donation.
+        We will provide you the Form 10BE on which income-tax deduction can be
+        claimed as per the income-tax rules.
+      </div>
+
+      <div style={{ fontSize: '18px', lineHeight: '1.8', marginBottom: '25px' }}>
+        This is a computer generated receipt. Incase of any discrepancy or queries
+        please email{' '}
+        <span style={{ color: '#d10087', fontWeight: 'bold' }}>manncarefoundation@gmail.com</span>
+      </div>
+
+      {/* Footer */}
+      <div style={{ borderTop: '1px solid #999', marginTop: '30px', paddingTop: '25px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', textAlign: 'center', marginBottom: '20px' }}>
+          <div style={{ width: '24%', fontSize: '15px', lineHeight: '1.6' }}>
+            <b>Registered Office:</b><br />
+            1708, One World, S.V. Road,<br />
+            Near N.M. High School, Malad (West),<br />
+            Mumbai - 400064
+          </div>
+          <div style={{ width: '24%', fontSize: '15px', lineHeight: '1.6' }}>
+            <b>Helpline Number</b><br />
+            +91 70390 06300<br />
+            +91 70390 06400
+          </div>
+          <div style={{ width: '24%', fontSize: '15px', lineHeight: '1.6' }}>
+            <b>Email</b><br />
+            manncarefoundation@gmail.com
+          </div>
+          <div style={{ width: '24%', fontSize: '15px', lineHeight: '1.6' }}>
+            <b>Website</b><br />
+            www.manncarefoundation.org
+          </div>
+        </div>
+      </div>
+
+      <div
+        style={{
+          background: '#d10087',
+          color: '#fff',
+          padding: '15px',
+          textAlign: 'center',
+          lineHeight: '1.8',
+          fontSize: '16px',
+          fontWeight: 'bold',
+          marginTop: '20px',
+        }}
+      >
+        *Website: www.manncarefoundation.org&nbsp;&nbsp;&nbsp;*E-Mail: manncarefoundation@gmail.com&nbsp;&nbsp;&nbsp;*Trust PAN CARD No. AAUCM9048B
+        <br />
+        Helpline Number MANN: +917039006300 / +917039006400
+      </div>
+
+      <div
+        style={{
+          textAlign: 'center',
+          color: '#d10087',
+          fontSize: '30px',
+          fontWeight: 'bold',
+          marginTop: '20px',
+        }}
+      >
+        80G CERTIFICATE OF DONATION
+      </div>
+    </div>
+  )
+}
