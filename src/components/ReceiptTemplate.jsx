@@ -161,7 +161,7 @@ export default function ReceiptTemplate({ donor, index, signature }) {
             <td style={{ border: '1px solid #666', padding: '15px' }}>{donor['Email ID']}</td>
           </tr>
           <tr>
-            <td style={{ border: '1px solid #666', padding: '15px' }}>Project / Account Name</td>
+            <td style={{ border: '1px solid #666', padding: '15px' }}>Account Of</td>
             <td style={{ border: '1px solid #666', padding: '15px' }}>{donor['Account Of']}</td>
           </tr>
           <tr>
@@ -202,7 +202,7 @@ export default function ReceiptTemplate({ donor, index, signature }) {
           <div style={{ width: '24%', fontSize: '15px', lineHeight: '1.6' }}>
             <b>Registered Office:</b><br />
             1708, One World, S.V. Road,<br />
-            Near N.M. High School, Malad (West),<br />
+            Near N.M. High School, <br /> Malad (West),<br />
             Mumbai - 400064
           </div>
           <div style={{ width: '24%', fontSize: '15px', lineHeight: '1.6' }}>
@@ -225,17 +225,42 @@ export default function ReceiptTemplate({ donor, index, signature }) {
         style={{
           background: '#d10087',
           color: '#fff',
-          padding: '15px',
-          textAlign: 'center',
-          lineHeight: '1.8',
-          fontSize: '16px',
-          fontWeight: 'bold',
+          padding: '15px 20px',
           marginTop: '20px',
         }}
       >
-        *Website: www.manncarefoundation.org&nbsp;&nbsp;&nbsp;*E-Mail: manncarefoundation@gmail.com&nbsp;&nbsp;&nbsp;*Trust PAN CARD No. AAUCM9048B
-        <br />
-        Helpline Number MANN: +917039006300 / +917039006400
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            textAlign: 'center',
+          }}
+        >
+          <div style={{ flex: 1 }}>
+            <div style={{ fontWeight: 'bold' }}>Website :</div>
+            <div>www.manncarefoundation.org</div>
+          </div>
+
+          <div style={{ flex: 1 }}>
+            <div style={{ fontWeight: 'bold' }}>E-Mail :</div>
+            <div>manncarefoundation@gmail.com</div>
+          </div>
+
+          <div style={{ flex: 1 }}>
+            <div style={{ fontWeight: 'bold' }}>Trust PAN CARD No. :</div>
+            <div>AAUCM9048B</div>
+          </div>
+        </div>
+
+        <div
+          style={{
+            textAlign: 'center',
+            marginTop: '12px',
+            fontWeight: 'bold',
+          }}
+        >
+          Helpline Number MANN: +91 7039006300 / +91 7039006400
+        </div>
       </div>
 
       <div
