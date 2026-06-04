@@ -6,7 +6,6 @@ import ReceiptPreview from './components/ReceiptPreview'
 export default function App() {
   const [donors, setDonors] = useState(null)
   const [selectedIndex, setSelectedIndex] = useState(null)
-  const [signature, setSignature] = useState(null)
 
   const handleDataLoaded = useCallback((data) => {
     setDonors(data)
@@ -17,22 +16,14 @@ export default function App() {
     setSelectedIndex(index)
   }, [])
 
-  const handleSignatureUpload = useCallback((e) => {
-    const file = e.target.files[0]
-    if (!file) return
-    const reader = new FileReader()
-    reader.onload = (ev) => setSignature(ev.target.result)
-    reader.readAsDataURL(file)
-  }, [])
-
   return (
-    <div className="min-h-screen bg-gray-100">
-      <header className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-6xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 bg-blue-600 rounded-lg flex items-center justify-center">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      <header className="bg-gradient-to-r from-[#d10087] to-[#e4008d] shadow-lg">
+        <div className="max-w-6xl mx-auto px-3 py-3 sm:px-6 sm:py-4 lg:px-8">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="h-8 w-8 sm:h-10 sm:w-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center shrink-0 ring-1 ring-white/30">
               <svg
-                className="h-6 w-6 text-white"
+                className="h-5 w-5 sm:h-6 sm:w-6 text-white"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -45,11 +36,11 @@ export default function App() {
                 />
               </svg>
             </div>
-            <div>
-              <h1 className="text-xl font-bold text-gray-900">
+            <div className="min-w-0">
+              <h1 className="text-base sm:text-xl font-bold text-white truncate drop-shadow-sm">
                 NGO Donation Receipt Generator
               </h1>
-              <p className="text-sm text-gray-500">
+              <p className="text-xs sm:text-sm text-pink-100 truncate">
                 Upload Excel & generate donation receipts
               </p>
             </div>
@@ -57,11 +48,11 @@ export default function App() {
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
+      <main className="max-w-6xl mx-auto px-3 py-4 sm:px-6 sm:py-6 lg:px-8 animate-fadeIn">
         <ExcelUpload onDataLoaded={handleDataLoaded} />
 
         {donors && (
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mb-6">
+          <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-md border border-gray-200/80 p-4 sm:p-6 mb-4 sm:mb-6 transition-all duration-300 hover:shadow-lg animate-slideUp">
             <DonorTable
               donors={donors}
               selectedIndex={selectedIndex}
@@ -70,12 +61,10 @@ export default function App() {
           </div>
         )}
 
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+        <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-md border border-gray-200/80 p-4 sm:p-6 transition-all duration-300 hover:shadow-lg animate-slideUp" style={{ animationDelay: '0.1s' }}>
           <ReceiptPreview
             donors={donors}
             selectedIndex={selectedIndex}
-            signature={signature}
-            onSignatureUpload={handleSignatureUpload}
           />
         </div>
       </main>

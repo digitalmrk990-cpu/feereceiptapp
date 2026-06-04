@@ -1,16 +1,42 @@
 import {
   formatIndianCurrency,
   amountInWords,
-  generateReceiptNumber,
-  generateTransactionRef,
   getFormattedDate,
 } from '../services/pdfGenerator'
+import defaultSignature from '../../signature.jpeg'
 
 export default function ReceiptTemplate({ donor, index, signature }) {
-  const receiptNumber = generateReceiptNumber(index)
-  const transactionRef = generateTransactionRef(index)
   const formattedDate = getFormattedDate()
   const amount = Number(donor['Amount']) || 0
+
+  if (donor._dataMissing) {
+    return (
+      <div
+        style={{
+          width: '1000px',
+          margin: '0 auto',
+          background: '#fff',
+          padding: '40px',
+          border: '2px solid #e4008d',
+          color: '#222',
+          fontFamily: 'Arial, sans-serif',
+          fontSize: '16px',
+          lineHeight: '1.6',
+          textAlign: 'center',
+        }}
+      >
+        <div style={{ fontSize: '48px', fontWeight: 'bold', color: '#e4008d', marginTop: '100px' }}>
+          DATA MISSING
+        </div>
+        <div style={{ fontSize: '20px', marginTop: '20px', color: '#666' }}>
+          Receipt for <b>{donor['Donor Name'] || 'Unknown'}</b> could not be generated due to missing mandatory fields.
+        </div>
+        <div style={{ fontSize: '18px', marginTop: '30px', color: '#999' }}>
+          Receipt No.: {donor['Receipt No.'] || 'N/A'}
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div
@@ -34,13 +60,15 @@ export default function ReceiptTemplate({ donor, index, signature }) {
       {/* Top Section */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div style={{ width: '50%', lineHeight: '1.6', fontSize: '16px' }}>
-          <b>Receipt No.:</b> {receiptNumber}
+          <b>Receipt No.:</b> {donor['Receipt No.']}
           <br /><br />
           {formattedDate}
           <br /><br />
-          {donor['Full Name'].toUpperCase()}<br />
-          {donor['Address']}<br />
-          PAN No. - {donor['PAN Card No']}
+          {donor['Donor Name'].toUpperCase()}<br />
+          {donor['Address 1']}<br />
+          PAN No. - {donor['PAN No.']}
+          <br />
+          Email - {donor['Email ID']}
         </div>
 
         <div style={{ width: '42%', textAlign: 'right' }}>
@@ -70,7 +98,7 @@ export default function ReceiptTemplate({ donor, index, signature }) {
 
       {/* Donor Section */}
       <div style={{ marginTop: '35px', lineHeight: '1.7', fontSize: '18px' }}>
-        Dear {donor['Full Name'].toUpperCase()}
+        Dear {donor['Donor Name'].toUpperCase()}
         <br /><br />
         Thank you for making a contribution of {formatIndianCurrency(amount)} to Mann Care Foundation.
         <br />
@@ -81,17 +109,11 @@ export default function ReceiptTemplate({ donor, index, signature }) {
       <div style={{ marginTop: '40px' }}>
         <b>For Mann Care Foundation</b>
         <div style={{ marginTop: '5px' }}>
-          {signature ? (
-            <img
-              src={signature}
-              alt="Authorised Signatory"
-              style={{ height: '60px' }}
-            />
-          ) : (
-            <div style={{ fontSize: '14px', color: '#999', fontStyle: 'italic' }}>
-              (Upload signature above)
-            </div>
-          )}
+          <img
+            src={signature || defaultSignature}
+            alt="Authorised Signatory"
+            style={{ height: '60px' }}
+          />
         </div>
         <div style={{ marginTop: '5px', fontWeight: 'bold', fontSize: '18px' }}>
           (Authorised Signatory)
@@ -106,7 +128,7 @@ export default function ReceiptTemplate({ donor, index, signature }) {
       </div>
 
       <div style={{ fontSize: '20px', textAlign: 'center', marginBottom: '25px' }}>
-        We confirm the receipt of donation from Mr/Ms/Mrs {donor['Full Name'].toUpperCase()} as per details below:-
+        We confirm the receipt of donation from Mr/Ms/Mrs {donor['Donor Name'].toUpperCase()} as per details below:-
       </div>
 
       <table
@@ -123,12 +145,24 @@ export default function ReceiptTemplate({ donor, index, signature }) {
             <td style={{ border: '1px solid #666', padding: '15px' }}>{formattedDate}</td>
           </tr>
           <tr>
-            <td style={{ border: '1px solid #666', padding: '15px' }}>Transaction Reference Number</td>
-            <td style={{ border: '1px solid #666', padding: '15px' }}>{transactionRef}</td>
+            <td style={{ border: '1px solid #666', padding: '15px' }}>Transaction / Reference Number</td>
+            <td style={{ border: '1px solid #666', padding: '15px' }}>{donor['Payment ID No.']}</td>
           </tr>
           <tr>
             <td style={{ border: '1px solid #666', padding: '15px' }}>Payment Mode</td>
-            <td style={{ border: '1px solid #666', padding: '15px' }}>{donor['Payment Mode']}</td>
+            <td style={{ border: '1px solid #666', padding: '15px' }}>{donor['Mode of Payment (MOP)']}</td>
+          </tr>
+          <tr>
+            <td style={{ border: '1px solid #666', padding: '15px' }}>Bank Name</td>
+            <td style={{ border: '1px solid #666', padding: '15px' }}>{donor['Donor Bank Name']}</td>
+          </tr>
+          <tr>
+            <td style={{ border: '1px solid #666', padding: '15px' }}>Email Address</td>
+            <td style={{ border: '1px solid #666', padding: '15px' }}>{donor['Email ID']}</td>
+          </tr>
+          <tr>
+            <td style={{ border: '1px solid #666', padding: '15px' }}>Project / Account Name</td>
+            <td style={{ border: '1px solid #666', padding: '15px' }}>{donor['Account Of']}</td>
           </tr>
           <tr>
             <td style={{ border: '1px solid #666', padding: '15px' }}>Total Contribution Received (Numbers)</td>

@@ -55,24 +55,6 @@ export function amountInWords(amount) {
   return res.trim() + ' Only'
 }
 
-export function generateReceiptNumber(index) {
-  const num = String(index + 1).padStart(4, '0')
-  return `MCF-2026-${num}`
-}
-
-export function generateTransactionRef(index) {
-  const num = String(index + 1).padStart(6, '0')
-  return `MCF26${num}`
-}
-
-export function getCurrentDate() {
-  const d = new Date()
-  const day = String(d.getDate()).padStart(2, '0')
-  const month = String(d.getMonth() + 1).padStart(2, '0')
-  const year = d.getFullYear()
-  return `${day}-${month}-${year}`
-}
-
 export function getFormattedDate() {
   const d = new Date()
   const months = ['January', 'February', 'March', 'April', 'May', 'June',
@@ -82,32 +64,50 @@ export function getFormattedDate() {
 
 export async function generateReceiptPDF(element) {
   const canvas = await html2canvas(element, {
-    scale: 2,
+    scale: 1,
     useCORS: true,
     logging: false,
     width: 1000,
+    onclone: (doc) => {
+      let el = doc.querySelector('[data-receipt-batch]')
+      if (!el) el = doc.querySelector('[data-receipt]')
+      if (el) {
+        let p = el.parentElement
+        while (p) {
+          if (p.style.display === 'none') {
+            p.style.display = 'block'
+            p.style.position = 'absolute'
+            p.style.left = '-9999px'
+          }
+          p = p.parentElement
+        }
+      }
+    },
   })
-  const imgData = canvas.toDataURL('image/png')
   const pdf = new jsPDF('p', 'mm', 'a4')
   const pdfW = pdf.internal.pageSize.getWidth()
   const pdfH = pdf.internal.pageSize.getHeight()
-  const marginX = 5
-  const marginY = 10
-  const maxW = pdfW - 2 * marginX
-  const maxH = pdfH - 2 * marginY
+  const margin = 3
+  const maxW = pdfW - 2 * margin
+  const maxH = pdfH - 2 * margin
   const ratio = Math.min(maxW / canvas.width, maxH / canvas.height)
   const imgW = canvas.width * ratio
   const imgH = canvas.height * ratio
   const x = (pdfW - imgW) / 2
   const y = (pdfH - imgH) / 2
-  pdf.addImage(imgData, 'PNG', x, y, imgW, imgH)
+  pdf.addImage(canvas.toDataURL('image/jpeg', 0.8), 'JPEG', x, y, imgW, imgH)
   return pdf
 }
 
-export async function downloadSinglePDF(element, donor, index) {
-  const receiptNumber = generateReceiptNumber(index)
+function sanitizeFileName(name) {
+  return String(name).replace(/[<>:"/\\|?*]/g, '_').trim() || 'Unknown'
+}
+
+export async function downloadSinglePDF(element, donor) {
+  const receiptNo = donor['Receipt No.'] || 'N/A'
+  const donorName = sanitizeFileName(donor['Donor Name'])
   const pdf = await generateReceiptPDF(element)
-  pdf.save(`Receipt_${receiptNumber}.pdf`)
+  pdf.save(`Receipt_${receiptNo}_${donorName}.pdf`)
 }
 
 export async function downloadAllPDFs(elements) {
@@ -115,9 +115,11 @@ export async function downloadAllPDFs(elements) {
   const folder = zip.folder('Donation_Receipts')
 
   for (let i = 0; i < elements.length; i++) {
-    const pdf = await generateReceiptPDF(elements[i].element)
-    const receiptNumber = generateReceiptNumber(i)
-    folder.file(`Receipt_${receiptNumber}.pdf`, pdf.output('arraybuffer'))
+    const { element, donor } = elements[i]
+    const pdf = await generateReceiptPDF(element)
+    const receiptNo = donor['Receipt No.'] || `ROW${i + 1}`
+    const donorName = sanitizeFileName(donor['Donor Name'])
+    folder.file(`Receipt_${receiptNo}_${donorName}.pdf`, pdf.output('arraybuffer'))
   }
 
   const content = await zip.generateAsync({ type: 'blob' })

@@ -1,357 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>80G Certificate</title>
+Upload the Excel/CSV sheet and process all rows automatically.
 
-<style>
-    *{
-        margin:0;
-        padding:0;
-        box-sizing:border-box;
-        font-family: Arial, sans-serif;
-    }
+IMPORTANT RULES:
 
-    body{
-        background:#f5f5f5;
-        padding:20px;
-    }
+1. Read all columns from the uploaded sheet.
 
-    .certificate{
-        width:1000px;
-        margin:auto;
-        background:#fff;
-        padding:40px;
-        border:1px solid #ddd;
-        color:#222;
-    }
+2. Extract ONLY the following columns:
 
-    .top-title{
-        text-align:center;
-        font-size:22px;
-        font-weight:bold;
-        margin-bottom:20px;
-    }
+   * Donor Name
+   * Address 1
+   * PAN No.
+   * Email ID
+   * Mode of Payment (MOP)
+   * Payment ID No.
+   * Donor Bank Name
+   * Amount
+   * Receipt No.
+   * Account Of
 
-    .top-section{
-        display:flex;
-        justify-content:space-between;
-        align-items:flex-start;
-    }
+3. Ignore all other columns completely.
 
-    .left-info{
-        width:50%;
-        line-height:1.6;
-        font-size:16px;
-    }
+4. For each row:
 
-    .right-info{
-        width:42%;
-        text-align:right;
-    }
+   * Generate one donation receipt using the provided receipt template.
+   * Auto-fill the receipt fields from the extracted columns.
+   * Preserve the exact formatting, layout, logo, colors, fonts, spacing, and design of the uploaded receipt template.
+   * Do not modify the template design.
 
-    .logo-box{
-        background:#e4008d;
-        color:#fff;
-        display:inline-block;
-        padding:15px 25px;
-        font-size:42px;
-        font-weight:bold;
-        margin-bottom:10px;
-    }
+5. Field Mapping:
 
-    .foundation-name{
-        color:#d10087;
-        font-size:34px;
-        font-weight:bold;
-        margin-bottom:10px;
-    }
+   * Donor Name → 
+   * Address 1 → Address
+   * PAN No. → PAN Number
+   * Email ID → Email Address
+   * Mode of Payment (MOP) → Payment Mode
+   * Payment ID No. → Transaction/Reference Number
+   * Donor Bank Name → Bank Name
+   * Amount → Donation Amount
+   * Receipt No. → Receipt Number
+   * Account Of → Project / Account Name
 
-    .small-text{
-        color:#d10087;
-        line-height:1.8;
-        font-size:18px;
-    }
+6. Validation:
 
-    .donor-section{
-        margin-top:35px;
-        line-height:1.7;
-        font-size:18px;
-    }
+   * Skip empty rows.
+   * Trim extra spaces.
+   * Preserve capitalization from the sheet.
+   * If a mandatory field is missing, mark the receipt as "Data Missing".
 
-    .signature-section{
-        margin-top:40px;
-    }
+7. Output:
 
-    .signature{
-        font-size:50px;
-        font-family:cursive;
-        margin-top:10px;
-    }
+   * Generate a separate receipt for every valid row.
+   * Export all receipts as PDF.
+   * File naming format:
+     Receipt_<ReceiptNo>_<DonorName>.pdf
 
-    .authorised{
-        margin-top:10px;
-        font-weight:bold;
-        font-size:18px;
-    }
+8. Batch Processing:
 
-    hr{
-        margin:40px 0 30px;
-        border:none;
-        border-top:1px solid #999;
-    }
-
-    .receipt-title{
-        text-align:center;
-        font-size:32px;
-        font-weight:bold;
-        margin-bottom:25px;
-    }
-
-    .receipt-text{
-        font-size:20px;
-        text-align:center;
-        margin-bottom:25px;
-    }
-
-    table{
-        width:80%;
-        margin:0 auto 30px;
-        border-collapse:collapse;
-        font-size:18px;
-    }
-
-    table td{
-        border:1px solid #666;
-        padding:15px;
-    }
-
-    .paragraph{
-        font-size:18px;
-        line-height:1.8;
-        margin-bottom:25px;
-    }
-
-    .pink{
-        color:#d10087;
-        font-weight:bold;
-    }
-
-    .footer-box{
-        border-top:1px solid #999;
-        margin-top:30px;
-        padding-top:25px;
-    }
-
-    .footer-flex{
-        display:flex;
-        justify-content:space-between;
-        text-align:center;
-        margin-bottom:20px;
-    }
-
-    .footer-item{
-        width:24%;
-        font-size:15px;
-        line-height:1.6;
-    }
-
-    .bottom-strip{
-        background:#d10087;
-        color:#fff;
-        padding:15px;
-        text-align:center;
-        line-height:1.8;
-        font-size:16px;
-        font-weight:bold;
-        margin-top:20px;
-    }
-
-    .bottom-title{
-        text-align:center;
-        color:#d10087;
-        font-size:30px;
-        font-weight:bold;
-        margin-top:20px;
-    }
-
-</style>
-</head>
-
-<body>
-
-<div class="certificate">
-
-    <div class="top-title">
-        80G Certificate
-    </div>
-
-    <div class="top-section">
-
-        <div class="left-info">
-            <b>Receipt No.:</b> MCF-2026-0001
-            <br><br>
-
-            02 June 2026
-            <br><br>
-
-            NEERAJ RAUSHAN KANTH<br>
-            FLAT NO 13, SF3, SUPERVISORS FLAT, BARADWARI,<br>
-            SAKCHI<br>
-            Jamshedpur , Jamshedpur - 831001<br>
-            PAN No. - DDUPK5216A
-        </div>
-
-        <div class="right-info">
-
-            <div class="logo-box">
-                MANN
-            </div>
-
-            <div class="foundation-name">
-                Mann Care Foundation
-            </div>
-
-            <div class="small-text">
-                *80G Registration CIN No. U88900MH2026NPL471199<br>
-                TAN No. : MUMM75033A<br>
-                *Trust PAN Card No. AAUCM9048B
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="donor-section">
-
-        Dear NEERAJ RAUSHAN KANTH
-        <br><br>
-
-        Thank you for making a contribution of Rs 250 to Mann Care Foundation.
-        <br>
-        Please keep this written acknowledgement of your donation for your tax records.
-
-    </div>
-
-    <div class="signature-section">
-
-        <b>For Mann Care Foundation</b>
-
-        <div class="signature">
-            Chitranjan
-        </div>
-
-        <div class="authorised">
-            (Authorised Signatory)
-        </div>
-
-    </div>
-
-    <hr>
-
-    <div class="receipt-title">
-        DONATION RECEIPT
-    </div>
-
-    <div class="receipt-text">
-        We confirm the receipt of donation from Mr/Ms/Mrs NEERAJ RAUSHAN KANTH as per details below:-
-    </div>
-
-    <table>
-        <tr>
-            <td>Donation Date</td>
-            <td>02 June 2026</td>
-        </tr>
-
-        <tr>
-            <td>Transaction Reference Number</td>
-            <td>MCF261540567892</td>
-        </tr>
-
-        <tr>
-            <td>Payment Mode</td>
-            <td>UPI</td>
-        </tr>
-
-        <tr>
-            <td>Total Contribution Received (Numbers)</td>
-            <td>Rs 250</td>
-        </tr>
-
-        <tr>
-            <td>Total Contribution Received (Words)</td>
-            <td>Rupees Two Hundred Fifty Only</td>
-        </tr>
-    </table>
-
-    <div class="paragraph">
-        Donations to <span class="pink">Mann Care Foundation</span> qualify for deduction
-        u/s 80G(5) of Income Tax Act 1961 vide Unique Registration Number
-        MCF2026NPL471199 approved on 02 June 2026 which is valid till AY2026-27.
-        This receipt is invalid in case of non-realization of the money instrument
-        or reversal of the credit/debit card charge or reversal of donation amount
-        for any reason. IT PAN: <span class="pink">AAUCM9048B.</span>
-    </div>
-
-    <div class="paragraph">
-        Please note that this is an acknowledgement for the receipt of donation.
-        We will provide you the Form 10BE on which income-tax deduction can be
-        claimed as per the income-tax rules.
-    </div>
-
-    <div class="paragraph">
-        This is a computer generated receipt. Incase of any discrepancy or queries
-        please email
-        <span class="pink">manncarefoundation@gmail.com</span>
-    </div>
-
-    <div class="footer-box">
-
-        <div class="footer-flex">
-
-            <div class="footer-item">
-                <b>Registered Office:</b><br>
-                1708, One World, S.V. Road,<br>
-                Near N.M. High School, Malad (West),<br>
-                Mumbai - 400064
-            </div>
-
-            <div class="footer-item">
-                <b>Helpline Number</b><br>
-                +91 70390 06300<br>
-                +91 70390 06400
-            </div>
-
-            <div class="footer-item">
-                <b>Email</b><br>
-                manncarefoundation@gmail.com
-            </div>
-
-            <div class="footer-item">
-                <b>Website</b><br>
-                www.manncarefoundation.org
-            </div>
-
-        </div>
-
-    </div>
-
-    <div class="bottom-strip">
-        *Website: www.manncarefoundation.org
-        &nbsp;&nbsp;&nbsp;
-        *E-Mail: manncarefoundation@gmail.com
-        &nbsp;&nbsp;&nbsp;
-        *Trust PAN CARD No. AAUCM9048B
-        <br>
-        Helpline Number MANN: +917039006300 / +917039006400
-    </div>
-
-    <div class="bottom-title">
-        80G CERTIFICATE OF DONATION
-    </div>
-
-</div>
-
-</body>
-</html>
+   * Process the entire sheet automatically without asking for confirmation.
+   * Generate all receipts in one run.
+   * Provide a downloadable ZIP containing all generated PDF receipts.
