@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Donation Receipt</title>
+ <style>
+  /* =============================================
+   Being Sevak Receipt - Exact Design Match
+   ============================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Times+New+Roman&family=Arial&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #f0f0f0;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  color: #111;
+  padding: 20px;
+}
+
+.page {
+  width: 720px;
+  margin: 0 auto;
+  background: #fff;
+}
+
+/* ---- BOTH BOXES ---- */
+.receipt-box {
+  border: 5.5px solid #00a3da;
+  padding: 0;
+  background: #fff;
+}
+
+/* ---- HEADER ---- */
+.header {
+  display: flex;
+  align-items: center;
+  padding: 8px 14px;
+  border-bottom: 1.5px solid #1a2e6e;
+  gap: 12px;
+}
+
+.logo-area {
+  flex-shrink: 0;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-img {
+  max-width: 70px;
+  max-height: 70px;
+  object-fit: contain;
+}
+
+/* Placeholder circle if logo missing */
+.logo-area::after {
+  /* content: '🏛'; */
+  font-size: 36px;
+  display: block;
+}
+.logo-area:has(img[style*="display:none"])::after,
+.logo-area:not(:has(img))::after {
+  display: block;
+}
+.logo-area img {
+  position: relative;
+  z-index: 1;
+}
+
+.org-name-area {
+  text-align: center;
+  flex: 1;
+}
+
+.tagline {
+  color: #c0392b;
+  font-style: italic;
+  font-size: 11px;
+  margin-bottom: 2px;
+}
+
+.jurisdiction {
+  color: #c0392b;
+  font-style: italic;
+  font-size: 11px;
+  margin-bottom: 2px;
+}
+
+.org-name {
+  font-size: 22px;
+  font-weight: bold;
+  color: #1a2e6e;
+  letter-spacing: 1px;
+  font-family: 'Times New Roman', serif;
+  line-height: 1.2;
+}
+
+.bold-b {
+  font-size: 26px;
+  font-weight: 900;
+  color: #1a2e6e;
+}
+
+.reg-line {
+  font-size: 10px;
+  color: #c0392b;
+  margin-top: 2px;
+}
+
+.reg-line.small {
+  font-size: 9px;
+  color: #1a2e6e;
+}
+
+/* ---- TITLE BAR ---- */
+.title-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border-bottom: 1px solid #1a2e6e;
+  padding: 5px 14px;
+}
+
+.cert-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #c0392b;
+  text-align: center;
+  flex: 1;
+  letter-spacing: 1px;
+}
+
+.receipt-meta {
+  font-size: 11px;
+  color: #111;
+  min-width: 130px;
+}
+
+.receipt-meta.right {
+  text-align: right;
+}
+
+/* ---- LETTER BODY ---- */
+.letter-body {
+  padding: 10px 18px 12px 18px;
+  line-height: 1.6;
+  font-size: 12px;
+}
+
+.letter-body p {
+  margin-bottom: 7px;
+}
+
+.amount-inline {
+  text-decoration: underline;
+  font-size: 12px;
+}
+
+.amount-figure {
+  float: right;
+  font-weight: bold;
+  font-size: 12px;
+  border-bottom: 1px solid #111;
+  padding-bottom: 1px;
+  margin-left: 10px;
+}
+
+.note-line {
+  font-weight: bold;
+  font-size: 10px;
+  margin-top: 6px;
+  border-top: 1px solid #111;
+  padding-top: 4px;
+}
+
+/* ---- DASHED SEPARATOR ---- */
+.dashed-sep {
+  border: none;
+  border-top: 2px dashed #1a2e6e;
+  margin: 0;
+}
+
+/* ---- FIELDS TABLE ---- */
+.fields-table {
+  width: 100%;
+  border-collapse: collapse;
+  padding: 0 14px;
+  margin: 10px 0 0 0;
+}
+
+.fields-table td {
+  padding: 4px 8px 4px 14px;
+  vertical-align: bottom;
+  font-size: 12px;
+}
+
+.fields-table .label {
+  white-space: nowrap;
+  color: #111;
+  font-weight: normal;
+  padding-right: 4px;
+}
+
+.fields-table .value {
+  color: #111;
+}
+
+.fields-table .value.underline {
+  border-bottom: 1px solid #555;
+  min-width: 60px;
+}
+
+.fields-table .value.bold {
+  font-weight: bold;
+}
+
+.text-right {
+  text-align: right;
+}
+
+/* ---- AMOUNT ROW ---- */
+.amount-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 8px 14px 10px 14px;
+  margin-top: 4px;
+  border-top: 1px solid #1a2e6e;
+}
+
+.amount-box {
+  flex: 1;
+}
+
+.amount-header {
+  font-weight: bold;
+  font-size: 14px;
+  border: 1.5px solid #1a2e6e;
+  display: inline-block;
+  padding: 3px 8px;
+  background: #fff;
+  margin-bottom: 2px;
+}
+
+.amount-value-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.rs {
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.amount-value {
+  font-weight: bold;
+  font-size: 14px;
+  border: 1.5px solid #1a2e6e;
+  padding: 2px 10px;
+}
+
+.pan-label {
+  font-weight: bold;
+  font-size: 14px;
+  border: 1.5px solid #1a2e6e;
+  padding: 2px 6px;
+}
+
+.pan-value {
+  font-weight: bold;
+  font-size: 14px;
+  border: 1.5px solid #1a2e6e;
+  padding: 2px 20px;
+}
+
+.realisation-note {
+  font-size: 9px;
+  font-style: italic;
+  color: #333;
+  margin-bottom: 3px;
+}
+
+.email-row {
+  font-size: 11px;
+  margin-bottom: 3px;
+}
+
+.system-note {
+  font-size: 12px;
+  font-style: italic;
+  text-align: center;
+  margin-top: 4px;
+}
+
+/* ---- SEAL AREA ---- */
+.seal-area {
+  text-align: right;
+  min-width: 130px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.seal-img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.auth-sign {
+  font-size: 11px;
+  text-align: right;
+  line-height: 1.5;
+}
+
+
+.logo-box{
+    width:250px;
+    height:80px;
+    border:1px solid #ccc;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.logo-box img{
+    max-width:95%;
+    max-height:95%;
+    object-fit:contain;
+}
+
+
+/* ---- PRINT STYLES ---- */
+@media print {
+  body {
+    background: #fff;
+    padding: 0;
+  }
+  .page {
+    width: 100%;
+    margin: 0;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
+
+ </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- ===== TOP SECTION: Thank You Letter ===== -->
+    <div class="receipt-box top-box">
+
+      <!-- Header -->
+      <div class="header">
+        <div class="logo-area">
+          <!-- REPLACE: apna logo yahan daalein -->
+          <img src="logo.jpg" alt="" class="logo-img"  />
+        </div>
+        <div class="org-name-area">
+          <div class="tagline">We Rise By Lifting Others</div>
+          <div class="logo-title">
+          <div class="logo-box">
+          <img src="logo.png" alt="Being Sevak Logo">
+          </div>
+          </div>
+          <div class="reg-line">Charity Commissioner (Reg.) No. E-31948 &nbsp;|&nbsp; Income Tax, Exempted Under 80G No. AACTB6422FF20214</div>
+        </div>
+      </div>
+
+      <!-- Title Bar -->
+      <div class="title-bar">
+        <div class="receipt-meta left">
+          <span>Receipt No. &nbsp;<strong id="receipt-no-top">79298</strong></span>
+        </div>
+        <div class="cert-title">80G CERTIFICATE OF DONATION</div>
+        <div class="receipt-meta right">
+          <span>Date: &nbsp;<strong id="receipt-date-top">1-Jun-26</strong></span>
+        </div>
+      </div>
+
+      <!-- Body -->
+      <div class="letter-body">
+        <p><strong>NAME: &nbsp;&nbsp;<span id="donor-name-top">Subramanyam Sridhar</span></strong></p>
+        <p>Dear Sir/Madam,</p>
+        <p>
+          <strong>Being Sevak Charitable Trust</strong>, would like to thanks you for your generous donation of
+          <strong class="amount-inline" id="amount-words-top">One Thousand Five Hundred Rupees and No. Paise Only</strong>
+          <span class="amount-figure" id="amount-fig-top">Rs. 1,500.00</span>
+          for noble cause &amp; Make a Difference.
+        </p>
+        <p>
+          Your financial support helps us to continue in our mission. With the valuable support of donor <strong>LIKE YOU</strong>,
+          We are be able to help many of needy families and individuals for not only to meet essential daily needs, but to
+          manage their live-hood through our different activities like Food-grain Kit Distribution, Medical Kit Distribution,
+          Education Facilities &amp; many other activities.
+        </p>
+        <p>Please keep this written acknowledgement of your donation for your tax records.</p>
+        <p>
+          We thank you once again for your support and love we have received from you, We also hope forward to
+          your continued support.
+        </p>
+        <p>Thanking you,<br/>Yours truly,<br/><strong>Being Sevak Charitable Trust</strong></p>
+        <p class="note-line">
+          Note: Your Donation to Being Sevak Charitable Trust Is Eligible For 50% Tax Rebate [U/S 80G of Income Tax Act 1961]
+        </p>
+      </div>
+    </div>
+
+    <!-- Dashed separator -->
+    <div class="dashed-sep"></div>
+
+    <!-- ===== BOTTOM SECTION: Formal Receipt ===== -->
+    <div class="receipt-box bottom-box">
+
+      <!-- Header -->
+      <div class="header">
+        <div class="logo-area">
+          <img src="logo.jpg" alt="Trust Logo" class="logo-img"  />
+        </div>
+        <div class="org-name-area">
+          <div class="jurisdiction">Subject to Mumbai Jurisdiction</div>
+          <div class="org-name"><span class="bold-b">B</span>EING <span class="bold-b">S</span>EVAK Charitable Trust</div>
+          <div class="reg-line">Charity Commissioner (Reg.) No. E-31948, Certificate Under Section 80G of the Income Tax Act 1961</div>
+          <div class="reg-line">* 80G Registration No. AACTB6422FF20214 &nbsp;*CSR Registration No. CSR00015528</div>
+          <div class="reg-line small">Registered Add: 401, 4th Floor, 'A' Wing, New Delite Apartment, Chandavarkar Lane, Borivali (West), Mumbai - 92.</div>
+          <div class="reg-line small">*Website: www.beingsevak.org &nbsp;*Email: being.sevak@gmail.com &nbsp;*Trust PAN CARD No AACTB6422F</div>
+          <div class="reg-line small">Helpline Number SEVAK: *8879-035-035 &nbsp;*8879-034-034</div>
+        </div>
+      </div>
+
+      <!-- Receipt Fields -->
+      <table class="fields-table">
+        <tr>
+          <td class="label">Receipt No.</td>
+          <td class="value underline" id="receipt-no-bot">79298</td>
+          <td class="label text-right">Dated:</td>
+          <td class="value underline" id="receipt-date-bot">1-Jun-26</td>
+        </tr>
+        <tr>
+          <td class="label" colspan="1">RECEIVED with thanks from Ms./Mr./Miss.</td>
+          <td class="value underline bold" colspan="3" id="donor-name-bot">Subramanyam Sridhar</td>
+        </tr>
+        <tr>
+          <td class="label">Address:</td>
+          <td class="value underline bold" colspan="3" id="address">NA</td>
+        </tr>
+        <tr>
+          <td class="label">The Sum of Rupees:</td>
+          <td class="value underline bold" colspan="3" id="amount-words-bot">One Thousand Five Hundred Rupees and No. Paise Only</td>
+        </tr>
+        <tr>
+          <td class="label">Mode of Payment:</td>
+          <td class="value underline bold" id="mode">Online</td>
+          <td class="label">Payment ID No.:</td>
+          <td class="value underline bold" id="payment-id">*615211600684</td>
+        </tr>
+        <tr>
+          <td class="label">Bank Name:</td>
+          <td class="value underline bold" id="bank">NA</td>
+          <td colspan="2"></td>
+        </tr>
+        <tr>
+          <td class="label">On Account Of:</td>
+          <td class="value underline bold" colspan="3" id="account-of">Corpus</td>
+        </tr>
+      </table>
+
+      <!-- Amount + PAN + Seal row -->
+      <div class="amount-row">
+        <div class="amount-box">
+          <!-- <div class="amount-header">Amount (INR)</div> -->
+          <div class="amount-value-row">
+            <span class="amount-header"> Amount (INR)</span>
+            <span class="rs">Rs.</span>
+            <span class="amount-value" id="amount-fig-bot">1,500.00</span>
+            <span class="pan-label">PAN NO:</span>
+            <span class="pan-value" id="pan-no">NA</span>
+          </div>
+          <div class="realisation-note">Donation Payment is Subject to Realisation</div>
+          <div class="email-row">Email ID: &nbsp;<span id="email">NA</span></div>
+          <div class="system-note">****This is system generated auto receipt****</div>
+        </div>
+        <div class="seal-area">
+          <!-- REPLACE: apni seal/stamp yahan daalein -->
+          <img src="logo.jpg" alt="Seal" class="seal-img" onerror="this.style.display='none'" />
+          <div class="auth-sign">Authorised Sign.<br/><strong>Being Sevak Charitable Trust</strong></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- <script src="script.js"></script> -->
+</body>
+</html>

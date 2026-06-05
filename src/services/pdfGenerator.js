@@ -103,14 +103,15 @@ function sanitizeFileName(name) {
   return String(name).replace(/[<>:"/\\|?*]/g, '_').trim() || 'Unknown'
 }
 
-export async function downloadSinglePDF(element, donor) {
+export async function downloadSinglePDF(element, donor, project = '') {
   const receiptNo = donor['Receipt No.'] || 'N/A'
   const donorName = sanitizeFileName(donor['Donor Name'])
+  const prefix = project ? `${project}_` : ''
   const pdf = await generateReceiptPDF(element)
-  pdf.save(`Receipt_${receiptNo}_${donorName}.pdf`)
+  pdf.save(`${prefix}Receipt_${receiptNo}_${donorName}.pdf`)
 }
 
-export async function downloadAllPDFs(elements) {
+export async function downloadAllPDFs(elements, project = '') {
   const zip = new JSZip()
   const folder = zip.folder('Donation_Receipts')
 
@@ -119,9 +120,11 @@ export async function downloadAllPDFs(elements) {
     const pdf = await generateReceiptPDF(element)
     const receiptNo = donor['Receipt No.'] || `ROW${i + 1}`
     const donorName = sanitizeFileName(donor['Donor Name'])
-    folder.file(`Receipt_${receiptNo}_${donorName}.pdf`, pdf.output('arraybuffer'))
+    const prefix = project ? `${project}_` : ''
+    folder.file(`${prefix}Receipt_${receiptNo}_${donorName}.pdf`, pdf.output('arraybuffer'))
   }
 
   const content = await zip.generateAsync({ type: 'blob' })
-  saveAs(content, 'Donation_Receipts.zip')
+  const zipName = project ? `${project}_Donation_Receipts.zip` : 'Donation_Receipts.zip'
+  saveAs(content, zipName)
 }

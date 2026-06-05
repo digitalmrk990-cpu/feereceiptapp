@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>80G Donation Receipt</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#e9e9e9;
+    padding:12px;
+}
+
+.receipt{
+    width:794px;
+    min-height:1123px;
+    margin:auto;
+    background:#f4f4f4;
+    border:4px solid #2a0000;
+    position:relative;
+}
+
+.receipt::before{
+    content:"";
+    position:absolute;
+    inset:4px;
+    border:2px solid #7d2d2d;
+    pointer-events:none;
+}
+
+.header{
+    display:flex;
+    align-items:center;
+    padding:8px;
+    border-bottom:3px solid #2a0000;
+}
+
+.logo-box{
+    width:140px;
+    text-align:center;
+}
+
+.logo-box img{
+    width:110px;
+}
+
+.org-info{
+    flex:1;
+    text-align:center;
+}
+
+.top-small{
+    color:#7d2d2d;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.org-title{
+    color:#8b2f2f;
+    font-size:26px;
+    font-weight:800;
+    margin:2px 0;
+}
+
+.org-desc{
+    color:#8b2f2f;
+    font-size:11px;
+    line-height:1.3;
+}
+
+.title-bar{
+    text-align:center;
+    font-weight:700;
+    color:#8b2f2f;
+    font-size:24px;
+    padding:8px 0;
+    border-bottom:2px solid #000;
+}
+
+.section{
+    padding:10px;
+}
+
+.row{
+    display:flex;
+    align-items:center;
+    margin:12px 0;
+}
+
+.label{
+    font-size:15px;
+    font-weight:600;
+}
+
+.value-line{
+    border-bottom:4px solid #000;
+    min-height:24px;
+    padding:0 8px;
+}
+
+.space{
+    flex:1;
+}
+
+.w100{width:100px;}
+.w120{width:120px;}
+.w150{width:150px;}
+.w180{width:180px;}
+.w220{width:220px;}
+.w250{width:250px;}
+.w300{width:300px;}
+.w350{width:350px;}
+.w500{width:500px;}
+
+.amount-row{
+    display:flex;
+    gap:25px;
+    margin-top:20px;
+}
+
+.amount-box{
+    width:240px;
+}
+
+.amount-inner{
+    border:3px solid #000;
+    height:50px;
+    display:flex;
+}
+
+.amount-inner div{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+}
+
+.pan-box{
+    flex:1;
+}
+
+.pan-inner{
+    border:3px solid #000;
+    height:50px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+}
+
+.middle-section{
+    display:flex;
+    justify-content:space-between;
+    margin-top:20px;
+}
+
+.left-block{
+    display:flex;
+    gap:15px;
+}
+
+.big-80g{
+    font-size:60px;
+    font-weight:900;
+    color:#a03636;
+    line-height:1;
+}
+
+.donation-box{
+    width:280px;
+    border:3px solid #000;
+    padding:8px;
+    font-size:14px;
+    line-height:1.8;
+}
+
+.right-block{
+    text-align:center;
+    width:230px;
+}
+
+.stamp{
+    width:120px;
+    margin-bottom:8px;
+}
+
+.sign{
+    color:#8b2f2f;
+    font-size:18px;
+    font-weight:700;
+}
+
+.foundation{
+    color:#8b2f2f;
+    font-size:18px;
+    font-weight:800;
+}
+
+.auto-receipt{
+    text-align:center;
+    margin:18px 0;
+    font-weight:700;
+    font-size:20px;
+}
+
+.message-box{
+    border-top:3px solid #000;
+    border-bottom:3px solid #000;
+    padding:10px;
+}
+
+.thanks{
+    text-align:center;
+    color:#8b2f2f;
+    font-size:20px;
+    font-weight:800;
+    text-decoration:underline;
+    margin-bottom:12px;
+}
+
+.message-box p{
+    font-size:14px;
+    line-height:1.5;
+    margin-bottom:14px;
+}
+
+.subject{
+    text-align:center;
+    font-weight:700;
+    margin-top:10px;
+}
+
+.footer{
+    text-align:center;
+    color:#8b2f2f;
+    font-weight:700;
+    font-size:12px;
+    padding:8px;
+}
+
+@media print{
+    body{
+        padding:0;
+        background:#fff;
+    }
+
+    .receipt{
+        border:4px solid #2a0000;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="receipt">
+
+    <div class="header">
+
+        <div class="logo-box">
+            <img src="logo.png" alt="Logo">
+        </div>
+
+        <div class="org-info">
+
+            <div class="top-small">RAY OF HOPE</div>
+
+            <div class="org-title">
+                ASHRAY FOR LIFE FOUNDATION
+            </div>
+
+            <div class="org-desc">
+                Charity Commissioner (Reg.) No. E-37237,
+                Certificate Under Section 80G of Income Tax Act 1961
+                <br>
+                *80G Registration No. AAJTA4535BF2022101
+                *CSR Registration No.CSR00069515
+                <br>
+                *PAN CARD No AAJTA4535B
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="title-bar">
+        80G CERTIFICATE OF DONATION
+    </div>
+
+    <div class="section">
+
+        <div class="row">
+            <div class="label">Dated:</div>
+            <div class="value-line w120">1-Jun-26</div>
+
+            <div class="space"></div>
+
+            <div class="label">Receipt No.</div>
+            <div class="value-line w120">17125</div>
+        </div>
+
+        <div class="row">
+            <div class="label">Received from thanks Mr./Mrs./Ms. :</div>
+            <div class="value-line w500">
+                Mahendra Chandanshiv
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="label">Address:</div>
+            <div class="value-line w500">NA</div>
+        </div>
+
+        <div class="row">
+            <div class="label">City:</div>
+            <div class="value-line w180">NA</div>
+
+            <div style="width:20px"></div>
+
+            <div class="label">State:</div>
+            <div class="value-line w180">NA</div>
+
+            <div style="width:20px"></div>
+
+            <div class="label">Pin Code:</div>
+            <div class="value-line w180">NA</div>
+        </div>
+
+        <div class="row">
+            <div class="label">The Sum of Rupees:</div>
+            <div class="value-line w500">
+                Five Hundred Rupees and No. Paise Only
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="label">Mode of Payment:</div>
+            <div class="value-line w300">
+                Google Pay
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="label">Payment ID No.:</div>
+            <div class="value-line w350">
+                *943350090493
+            </div>
+        </div>
+
+        <div class="amount-row">
+
+            <div class="amount-box">
+
+                <div class="label" style="margin-bottom:8px">
+                    Amount (INR)
+                </div>
+
+                <div class="amount-inner">
+                    <div>Rs.</div>
+                    <div>500.00</div>
+                </div>
+
+            </div>
+
+            <div class="pan-box">
+
+                <div class="label" style="margin-bottom:8px">
+                    PAN NO:
+                </div>
+
+                <div class="pan-inner">
+                    NA
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="middle-section">
+
+            <div class="left-block">
+
+                <div class="big-80g">
+                    80G
+                </div>
+
+                <div class="donation-box">
+                    Donation To Ashray For Life Foundation
+                    <br>
+                    Eligible For 50% Income tax deduction
+                    <br>
+                    80G of Income tax act 1961
+                </div>
+
+            </div>
+
+            <div class="right-block">
+
+                <img src="stamp.png" class="stamp" alt="Stamp">
+
+                <div class="sign">
+                    Authorised Sign.
+                </div>
+
+                <div class="foundation">
+                    ASHRAY FOR LIFE FOUNDATION.
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="auto-receipt">
+            ****This is system generated auto receipt****
+        </div>
+
+    </div>
+
+    <div class="message-box">
+
+        <div class="thanks">
+            Thankyou for your Valuable Donation.
+        </div>
+
+        <p>
+            * Together we are making a difference! Your continued support
+            of our mission is deeply gratifying to us, and we hope it is
+            the same for you. Your contribution is enabling us to
+            accomplish in the field of Health, Education,
+            Sustainability, Vocational Training, Empowering Women and
+            Child Development.
+        </p>
+
+        <p>
+            * If You Have any Question regarding this 80G Tax Deduction
+            Certificate, Kindly get in touch with our Donor Relation
+            Officer at donorcare@aflf.org by quoting Unique Receipt Number.
+        </p>
+
+        <p>
+            * This Receipt is invalid in case of non-realization of the
+            money instrument or reversal of the credit/debit card charges
+            or reversal of donation amount.
+        </p>
+
+        <div class="subject">
+            Subject to Mumbai Jurisdiction
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Regd. Add: Unit - 218, 2nd Floor, Meter No.2, Auris Galleria,
+        New Link Road, Auris Serenity, Malad (West), Mumbai - 400064.
+        <br>
+        Website: www.aflf.org |
+        Email: ashray.foundation22@gmail.com
+        <br>
+        Helpline Number SEVAK: *9930028300 *9930028200
+    </div>
+
+</div>
+
+</body>
+</html>

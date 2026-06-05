@@ -1,8 +1,11 @@
 import { useRef, useState } from 'react'
 import ReceiptTemplate from './ReceiptTemplate'
+import ReceiptTemplateAshray from './ReceiptTemplateAshray'
+import ReceiptTemplateBeingSevak from './ReceiptTemplateBeingSevak'
+import { PROJECTS } from '../data/projects'
 import { downloadAllPDFs as downloadAll, downloadSinglePDF } from '../services/pdfGenerator'
 
-export default function ReceiptPreview({ donors, selectedIndex, signature }) {
+export default function ReceiptPreview({ donors, selectedIndex, signature, project }) {
   const receiptRef = useRef(null)
   const [downloadingSingle, setDownloadingSingle] = useState(false)
   const [downloadingAll, setDownloadingAll] = useState(false)
@@ -25,7 +28,7 @@ export default function ReceiptPreview({ donors, selectedIndex, signature }) {
     if (selectedIndex === null || selectedIndex === undefined) return
     setDownloadingSingle(true)
     try {
-      await downloadSinglePDF(receiptRef.current, donors[selectedIndex])
+      await downloadSinglePDF(receiptRef.current, donors[selectedIndex], project)
     } catch {
       alert('Failed to download PDF. Please try again.')
     }
@@ -39,7 +42,8 @@ export default function ReceiptPreview({ donors, selectedIndex, signature }) {
         document.querySelectorAll('[data-receipt-batch]')
       )
       await downloadAll(
-        elements.map((el, i) => ({ element: el, donor: donors[i] }))
+        elements.map((el, i) => ({ element: el, donor: donors[i] })),
+        project
       )
     } catch {
       alert('Failed to download ZIP. Please try again.')
@@ -143,14 +147,26 @@ export default function ReceiptPreview({ donors, selectedIndex, signature }) {
 
       <div className="overflow-x-auto">
         <div ref={receiptRef} data-receipt>
-          <ReceiptTemplate donor={currentDonor} index={currentIndex} signature={signature} />
+          {project === 'manncar' ? (
+            <ReceiptTemplate donor={currentDonor} index={currentIndex} signature={signature} />
+          ) : project === 'beingsevak' ? (
+            <ReceiptTemplateBeingSevak donor={currentDonor} index={currentIndex} signature={signature} />
+          ) : (
+            <ReceiptTemplateAshray donor={currentDonor} index={currentIndex} signature={signature} project={project} />
+          )}
         </div>
       </div>
 
       <div style={{ display: 'none' }}>
         {donors.map((donor, i) => (
           <div key={i} data-receipt-batch>
-            <ReceiptTemplate donor={donor} index={i} signature={signature} />
+            {project === 'manncar' ? (
+              <ReceiptTemplate donor={donor} index={i} signature={signature} />
+            ) : project === 'beingsevak' ? (
+              <ReceiptTemplateBeingSevak donor={donor} index={i} signature={signature} />
+            ) : (
+              <ReceiptTemplateAshray donor={donor} index={i} signature={signature} project={project} />
+            )}
           </div>
         ))}
       </div>
