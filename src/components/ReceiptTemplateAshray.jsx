@@ -3,8 +3,7 @@ import {
   amountInWords,
   getFormattedDate,
 } from '../services/pdfGenerator'
-import defaultStamp from '../../stamp.png'
-import ashrayLogo from '../../ahrayherderlogo.jpeg'
+import ashrayLogo from '../../ahsraylogo.png'
 import ashrayStamp from '../../ashraystamp.PNG'
 
 const ORG = {
@@ -39,6 +38,15 @@ const ORG = {
   },
 }
 
+const primary = '#8d636e'
+const primaryDark = '#6f4c55'
+const secondary = '#a87b85'
+const light = '#f7eef0'
+const dark = '#3d2a2f'
+const borderColor = '#e6d6da'
+
+const grad = 'linear-gradient(135deg, #8d636e 0%, #a87b85 50%, #c9a6ad 100%)'
+
 export default function ReceiptTemplateAshray({ donor, index, signature, project }) {
   const formattedDate = getFormattedDate()
   const amount = Number(donor['Amount']) || 0
@@ -51,13 +59,13 @@ export default function ReceiptTemplateAshray({ donor, index, signature, project
           width: '794px',
           margin: '0 auto',
           background: '#f4f4f4',
-          border: '4px solid #2a0000',
+          border: `4px solid ${primary}`,
           padding: '40px',
           textAlign: 'center',
           fontFamily: 'Arial, sans-serif',
         }}
       >
-        <div style={{ fontSize: '48px', fontWeight: 'bold', color: '#8b2f2f', marginTop: '100px' }}>
+        <div style={{ fontSize: '48px', fontWeight: 'bold', color: primaryDark, marginTop: '100px' }}>
           DATA MISSING
         </div>
         <div style={{ fontSize: '20px', marginTop: '20px', color: '#666' }}>
@@ -71,24 +79,36 @@ export default function ReceiptTemplateAshray({ donor, index, signature, project
   }
 
   return (
-    <div style={{ width: '794px', margin: '0 auto', background: '#f4f4f4', border: '4px solid #2a0000', position: 'relative', fontFamily: 'Arial, sans-serif' }}>
-      <div style={{ position: 'absolute', inset: '4px', border: '2px solid #7d2d2d', pointerEvents: 'none' }} />
-
+    <div
+      style={{
+        width: '794px',
+        margin: '0 auto',
+        background: '#fff',
+        overflow: 'hidden',
+        border: `2px solid ${primary}`,
+        fontFamily: "'Segoe UI', Arial, sans-serif",
+      }}
+    >
       {/* Header */}
-      <div style={{ display: 'flex', alignItems: 'center', padding: '8px', borderBottom: '3px solid #2a0000', position: 'relative' }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          padding: '20px',
+          background: grad,
+          color: '#fff',
+        }}
+      >
         <div style={{ width: '140px', textAlign: 'center' }}>
-          <img src={ashrayLogo} alt="Logo" style={{ width: '110px' }} />
+          <img src={ashrayLogo} alt="Logo" style={{  }} />
         </div>
         <div style={{ flex: 1, textAlign: 'center' }}>
-          <div style={{ color: '#7d2d2d', fontSize: '12px', fontWeight: 'bold' }}>{org.tagline}</div>
-          <div style={{ color: '#8b2f2f', fontSize: '26px', fontWeight: 800, margin: '2px 0' }}>{org.name}</div>
-          <div style={{ color: '#8b2f2f', fontSize: '11px', lineHeight: '1.3' }}>
-            {org.regNo}
+          <div style={{ fontSize: '13px', letterSpacing: '3px', opacity: 0.9 }}>{org.tagline}</div>
+          <div style={{ fontSize: '30px', fontWeight: 800, margin: '5px 0' }}>{org.name}</div>
+          <div style={{ fontSize: '11px', lineHeight: '1.6' }}>
+            {org.regNo}, {org.cert80g}
             <br />
-            {org.cert80g}
-            <br />
-            {org.reg80g}
-            {org.csrReg && <><br />{org.csrReg}</>}
+            {org.reg80g}{org.csrReg && <> | {org.csrReg}</>}
             <br />
             {org.panCard}
           </div>
@@ -96,93 +116,254 @@ export default function ReceiptTemplateAshray({ donor, index, signature, project
       </div>
 
       {/* Title Bar */}
-      <div style={{ textAlign: 'center', fontWeight: 700, color: '#8b2f2f', fontSize: '24px', padding: '8px 0', borderBottom: '2px solid #000', position: 'relative' }}>
+      <div
+        style={{
+          background: borderColor,
+          color: primary,
+          textAlign: 'center',
+          fontSize: '24px',
+          fontWeight: 800,
+          padding: '14px',
+          borderBottom: `2px solid ${borderColor}`,
+          letterSpacing: '1px',
+        }}
+      >
         80G CERTIFICATE OF DONATION
       </div>
 
       {/* Body */}
-      <div style={{ padding: '10px', position: 'relative' }}>
+      <div style={{ padding: '25px' }}>
         {/* Date & Receipt No */}
-        <div style={{ display: 'flex', alignItems: 'flex-end', margin: '12px 0' }}>
-          <span style={{ fontSize: '15px', fontWeight: 600, lineHeight: '28px' }}>Dated:</span>
-          <div style={{ borderBottom: '4px solid #000', minHeight: '24px', padding: '0 8px 6px', width: '120px', lineHeight: '24px' }}>{formattedDate}</div>
+        <div style={{ display: 'flex', alignItems: 'flex-end', marginBottom: '18px', flexWrap: 'wrap' }}>
+          <span style={{ fontWeight: 700, color: dark, marginRight: '8px' }}>Dated:</span>
+          <div
+            style={{
+              flex: 1,
+              minHeight: '28px',
+              padding: '4px 8px',
+              color: '#222',
+              fontWeight: 600,
+              borderBottom: `2px solid ${secondary}`,
+              maxWidth: '120px',
+            }}
+          >
+            {formattedDate}
+          </div>
           <div style={{ flex: 1 }} />
-          <span style={{ fontSize: '15px', fontWeight: 600, lineHeight: '28px' }}>Receipt No.</span>
-          <div style={{ borderBottom: '4px solid #000', minHeight: '24px', padding: '0 8px 6px', width: '120px', lineHeight: '24px' }}>{donor['Receipt No.']}</div>
+          <span style={{ fontWeight: 700, color: dark, marginRight: '8px' }}>Receipt No.</span>
+          <div
+            style={{
+              flex: 1,
+              minHeight: '28px',
+              padding: '4px 8px',
+              color: '#222',
+              fontWeight: 600,
+              borderBottom: `2px solid ${secondary}`,
+              maxWidth: '120px',
+            }}
+          >
+            {donor['Receipt No.']}
+          </div>
         </div>
 
         {/* Donor Name */}
-        <div style={{ display: 'flex', alignItems: 'flex-end', margin: '12px 0' }}>
-          <span style={{ fontSize: '15px', fontWeight: 600, lineHeight: '28px' }}>Received from thanks Mr./Mrs./Ms. :</span>
-          <div style={{ borderBottom: '4px solid #000', minHeight: '24px', padding: '0 8px 6px', width: '500px', lineHeight: '24px' }}>{donor['Donor Name']}</div>
+        <div style={{ display: 'flex', alignItems: 'flex-end', marginBottom: '18px', flexWrap: 'wrap' }}>
+          <span style={{ fontWeight: 700, color: dark, marginRight: '8px' }}>Received from thanks Mr./Mrs./Ms. :</span>
+          <div
+            style={{
+              flex: 1,
+              minHeight: '28px',
+              padding: '4px 8px',
+              color: '#222',
+              fontWeight: 600,
+              borderBottom: `2px solid ${secondary}`,
+            }}
+          >
+            {donor['Donor Name']}
+          </div>
         </div>
 
         {/* Address */}
-        <div style={{ display: 'flex', alignItems: 'flex-end', margin: '12px 0' }}>
-          <span style={{ fontSize: '15px', fontWeight: 600, lineHeight: '28px' }}>Address:</span>
-          <div style={{ borderBottom: '4px solid #000', minHeight: '24px', padding: '0 8px 6px', width: '500px', lineHeight: '24px' }}>{donor['Address 1'] || 'NA'}</div>
+        <div style={{ display: 'flex', alignItems: 'flex-end', marginBottom: '18px', flexWrap: 'wrap' }}>
+          <span style={{ fontWeight: 700, color: dark, marginRight: '8px' }}>Address:</span>
+          <div
+            style={{
+              flex: 1,
+              minHeight: '28px',
+              padding: '4px 8px',
+              color: '#222',
+              fontWeight: 600,
+              borderBottom: `2px solid ${secondary}`,
+            }}
+          >
+            {donor['Address 1'] || 'NA'}
+          </div>
         </div>
 
-        {/* City / State / Pin Code (not in data model, show NA) */}
-        <div style={{ display: 'flex', alignItems: 'flex-end', margin: '12px 0' }}>
-          <span style={{ fontSize: '15px', fontWeight: 600, lineHeight: '28px' }}>City:</span>
-          <div style={{ borderBottom: '4px solid #000', minHeight: '24px', padding: '0 8px 6px', width: '180px', lineHeight: '24px' }}>NA</div>
+        {/* City / State / Pin Code */}
+        <div style={{ display: 'flex', alignItems: 'flex-end', marginBottom: '18px', flexWrap: 'wrap' }}>
+          <span style={{ fontWeight: 700, color: dark, marginRight: '8px' }}>City:</span>
+          <div
+            style={{
+              minHeight: '28px',
+              padding: '4px 8px',
+              color: '#222',
+              fontWeight: 600,
+              borderBottom: `2px solid ${secondary}`,
+              width: '120px',
+            }}
+          >
+            NA
+          </div>
           <div style={{ width: '20px' }} />
-          <span style={{ fontSize: '15px', fontWeight: 600, lineHeight: '28px' }}>State:</span>
-          <div style={{ borderBottom: '4px solid #000', minHeight: '24px', padding: '0 8px 6px', width: '180px', lineHeight: '24px' }}>NA</div>
+          <span style={{ fontWeight: 700, color: dark, marginRight: '8px' }}>State:</span>
+          <div
+            style={{
+              minHeight: '28px',
+              padding: '4px 8px',
+              color: '#222',
+              fontWeight: 600,
+              borderBottom: `2px solid ${secondary}`,
+              width: '120px',
+            }}
+          >
+            NA
+          </div>
           <div style={{ width: '20px' }} />
-          <span style={{ fontSize: '15px', fontWeight: 600, lineHeight: '28px' }}>Pin Code:</span>
-          <div style={{ borderBottom: '4px solid #000', minHeight: '24px', padding: '0 8px 6px', width: '180px', lineHeight: '24px' }}>NA</div>
+          <span style={{ fontWeight: 700, color: dark, marginRight: '8px' }}>Pin Code:</span>
+          <div
+            style={{
+              minHeight: '28px',
+              padding: '4px 8px',
+              color: '#222',
+              fontWeight: 600,
+              borderBottom: `2px solid ${secondary}`,
+              width: '120px',
+            }}
+          >
+            NA
+          </div>
         </div>
 
         {/* Amount in Words */}
-        <div style={{ display: 'flex', alignItems: 'flex-end', margin: '12px 0' }}>
-          <span style={{ fontSize: '15px', fontWeight: 600, lineHeight: '28px' }}>The Sum of Rupees:</span>
-          <div style={{ borderBottom: '4px solid #000', minHeight: '24px', padding: '0 8px 6px', width: '500px', lineHeight: '24px' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-end', marginBottom: '18px', flexWrap: 'wrap' }}>
+          <span style={{ fontWeight: 700, color: dark, marginRight: '8px' }}>The Sum of Rupees:</span>
+          <div
+            style={{
+              flex: 1,
+              minHeight: '28px',
+              padding: '4px 8px',
+              color: '#222',
+              fontWeight: 600,
+              borderBottom: `2px solid ${secondary}`,
+            }}
+          >
             {amountInWords(amount)} Only
           </div>
         </div>
 
-        {/* Mode of Payment */}
-        <div style={{ display: 'flex', alignItems: 'flex-end', margin: '12px 0' }}>
-          <span style={{ fontSize: '15px', fontWeight: 600, lineHeight: '28px' }}>Mode of Payment:</span>
-          <div style={{ borderBottom: '4px solid #000', minHeight: '24px', padding: '0 8px 6px', width: '300px', lineHeight: '24px' }}>{donor['Mode of Payment (MOP)']}</div>
-        </div>
-
-        {/* Payment ID */}
-        <div style={{ display: 'flex', alignItems: 'flex-end', margin: '12px 0' }}>
-          <span style={{ fontSize: '15px', fontWeight: 600, lineHeight: '28px' }}>Payment ID No.:</span>
-          <div style={{ borderBottom: '4px solid #000', minHeight: '24px', padding: '0 8px 6px', width: '350px', lineHeight: '24px' }}>{donor['Payment ID No.']}</div>
+        {/* Mode of Payment + Payment ID */}
+        <div style={{ display: 'flex', alignItems: 'flex-end', marginBottom: '18px', gap: '20px' }}>
+          <div style={{ display: 'flex', alignItems: 'flex-end', flex: 1 }}>
+            <span style={{ fontWeight: 700, color: dark, marginRight: '8px', whiteSpace: 'nowrap' }}>Mode of Payment:</span>
+            <div
+              style={{
+                flex: 1,
+                minHeight: '28px',
+                padding: '4px 8px',
+                color: '#222',
+                fontWeight: 600,
+                borderBottom: `2px solid ${secondary}`,
+              }}
+            >
+              {donor['Mode of Payment (MOP)']}
+            </div>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'flex-end', flex: 1 }}>
+            <span style={{ fontWeight: 700, color: dark, marginRight: '8px', whiteSpace: 'nowrap' }}>Payment ID No.:</span>
+            <div
+              style={{
+                flex: 1,
+                minHeight: '28px',
+                padding: '4px 8px',
+                color: '#222',
+                fontWeight: 600,
+                borderBottom: `2px solid ${secondary}`,
+              }}
+            >
+              {donor['Payment ID No.']}
+            </div>
+          </div>
         </div>
 
         {/* Account Of */}
-        <div style={{ display: 'flex', alignItems: 'flex-end', margin: '12px 0' }}>
-          <span style={{ fontSize: '15px', fontWeight: 600, lineHeight: '28px' }}>Account Of:</span>
-          <div style={{ borderBottom: '4px solid #000', minHeight: '24px', padding: '0 8px 6px', width: '350px', lineHeight: '24px' }}>{donor['Account Of'] || 'NA'}</div>
+        <div style={{ display: 'flex', alignItems: 'flex-end', marginBottom: '18px', flexWrap: 'wrap' }}>
+          <span style={{ fontWeight: 700, color: dark, marginRight: '8px' }}>Account Of:</span>
+          <div
+            style={{
+              flex: 1,
+              minHeight: '28px',
+              padding: '4px 8px',
+              color: '#222',
+              fontWeight: 600,
+              borderBottom: `2px solid ${secondary}`,
+            }}
+          >
+            {donor['Account Of'] || 'NA'}
+          </div>
         </div>
 
         {/* Amount & PAN */}
-        <div style={{ display: 'flex', gap: '25px', marginTop: '20px' }}>
-          <div style={{ width: '240px' }}>
-            <div style={{ fontSize: '15px', fontWeight: 600, marginBottom: '8px' }}>Amount (INR)</div>
-            <div style={{ border: '3px solid #000', height: '50px', display: 'flex' }}>
-              <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px' }}>Rs.</div>
-              <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px' }}>{amount.toFixed(2)}</div>
+        <div style={{ display: 'flex', gap: '20px', marginTop: '25px' }}>
+          <div style={{ flex: 1 }}>
+            <div style={{
+              height: '65px',
+              borderRadius: '12px',
+              border: `2px solid ${secondary}`,
+              background: borderColor,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '24px',
+              fontWeight: 700,
+              color: primary,
+            }}>
+              <div style={{ flex: 1, textAlign: 'center' }}>Amount (INR).</div>
+              <div style={{ flex: 1, textAlign: 'center' }}>Rs.{amount.toFixed(2)}</div>
             </div>
           </div>
           <div style={{ flex: 1 }}>
-            <div style={{ fontSize: '15px', fontWeight: 600, marginBottom: '8px' }}>PAN NO:</div>
-            <div style={{ border: '3px solid #000', height: '50px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '20px' }}>
-              {donor['PAN No.'] || 'NA'}
+            <div style={{
+              height: '65px',
+              borderRadius: '12px',
+              border: `2px solid ${secondary}`,
+              background: borderColor,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '24px',
+              fontWeight: 700,
+              color: primary,
+            }}>
+              <div style={{ flex: 1, textAlign: 'center' }}>PAN NO.</div>
+              <div style={{ flex: 1, textAlign: 'center' }}>{donor['PAN No.'] || 'NA'}</div>
             </div>
           </div>
         </div>
 
         {/* Middle Section: 80G + Donation Info + Signature */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '20px' }}>
-          <div style={{ display: 'flex', gap: '15px' }}>
-            <div style={{ fontSize: '60px', fontWeight: 900, color: '#a03636', lineHeight: 1 }}>80G</div>
-            <div style={{ width: '280px', border: '3px solid #000', padding: '8px', fontSize: '14px', lineHeight: '1.8', height: 'fit-content' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '30px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+            <div style={{ fontSize: '80px', fontWeight: 900, color: primary, lineHeight: 1 }}>80G</div>
+            <div style={{
+              width: '320px',
+              padding: '15px',
+              borderRadius: '12px',
+              border: `2px solid ${secondary}`,
+              background: borderColor,
+              lineHeight: '1.8',
+              fontSize: '14px',
+            }}>
               Donation To {org.name}
               <br />
               Eligible For 50% Income tax deduction
@@ -190,48 +371,73 @@ export default function ReceiptTemplateAshray({ donor, index, signature, project
               80G of Income tax act 1961
             </div>
           </div>
-          <div style={{ textAlign: 'center', width: '230px' }}>
+          <div style={{ textAlign: 'center' }}>
             <img
               src={ashrayStamp}
               alt="Stamp"
-              style={{
-                width: '120px',
-                marginBottom: '8px',
-                marginLeft: '46px'
-              }}
+              style={{ width: '120px', marginBottom: '10px' , marginLeft: '60px', }}
             />
-            <div style={{ color: '#8b2f2f', fontSize: '18px', fontWeight: 700 }}>Authorised Sign.</div>
-            <div style={{ color: '#8b2f2f', fontSize: '18px', fontWeight: 800 }}>{org.name}.</div>
+            <div style={{ fontSize: '17px', fontWeight: 700, color: primary }}>Authorised Sign.</div>
+            <div style={{ fontSize: '18px', fontWeight: 800, color: dark }}>{org.name}.</div>
           </div>
         </div>
 
         {/* Auto receipt note */}
-        <div style={{ textAlign: 'center', margin: '18px 0', fontWeight: 700, fontSize: '20px' }}>
+        <div style={{
+          marginTop: '25px',
+          textAlign: 'center',
+          background: borderColor,
+          padding: '12px',
+          borderRadius: '10px',
+          color: primary,
+          fontWeight: 700,
+        }}>
           ****This is system generated auto receipt****
         </div>
       </div>
 
       {/* Message Box */}
-      <div style={{ borderTop: '3px solid #000', borderBottom: '3px solid #000', padding: '10px', position: 'relative' }}>
-        <div style={{ textAlign: 'center', color: '#8b2f2f', fontSize: '20px', fontWeight: 800, textDecoration: 'underline', marginBottom: '12px' }}>
+      <div style={{
+        margin: '0 25px 25px',
+        borderRadius: '15px',
+        border: `2px solid ${borderColor}`,
+        background: borderColor,
+        padding: '25px',
+      }}>
+        <div style={{
+          textAlign: 'center',
+          color: primary,
+          fontSize: '24px',
+          fontWeight: 800,
+          marginBottom: '20px',
+        }}>
           Thankyou for your Valuable Donation.
         </div>
-        <p style={{ fontSize: '14px', lineHeight: '1.5', marginBottom: '14px' }}>
+        <p style={{ marginBottom: '15px', lineHeight: '1.8', color: '#444', fontSize: '14px' }}>
           * Together we are making a difference! Your continued support of our mission is deeply gratifying to us, and we hope it is the same for you. Your contribution is enabling us to accomplish in the field of Health, Education, Sustainability, Vocational Training, Empowering Women and Child Development.
         </p>
-        <p style={{ fontSize: '14px', lineHeight: '1.5', marginBottom: '14px' }}>
+        <p style={{ marginBottom: '15px', lineHeight: '1.8', color: '#444', fontSize: '14px' }}>
           * If You Have any Question regarding this 80G Tax Deduction Certificate, Kindly get in touch with our Donor Relation Officer at {org.donorEmail} by quoting Unique Receipt Number.
         </p>
-        <p style={{ fontSize: '14px', lineHeight: '1.5', marginBottom: '14px' }}>
+        <p style={{ marginBottom: '15px', lineHeight: '1.8', color: '#444', fontSize: '14px' }}>
           * This Receipt is invalid in case of non-realization of the money instrument or reversal of the credit/debit card charges or reversal of donation amount.
         </p>
-        <div style={{ textAlign: 'center', fontWeight: 700, marginTop: '10px' }}>
+        <div style={{ textAlign: 'center', fontWeight: 700, color: dark, marginTop: '20px' }}>
           Subject to Mumbai Jurisdiction
         </div>
       </div>
 
       {/* Footer */}
-      <div style={{ textAlign: 'center', color: '#8b2f2f', fontWeight: 700, fontSize: '12px', padding: '8px', position: 'relative' }}>
+      <div
+        style={{
+          background: grad,
+          color: '#fff',
+          textAlign: 'center',
+          padding: '18px',
+          fontSize: '12px',
+          lineHeight: '1.8',
+        }}
+      >
         Regd. Add: {org.address}
         <br />
         Website: {org.website} | Email: {org.email}

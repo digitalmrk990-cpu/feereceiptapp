@@ -3,7 +3,9 @@ import {
   amountInWords,
   getFormattedDate,
 } from '../services/pdfGenerator'
-import defaultStamp from '../../stamp.png'
+import defaultStamp from '../../Capture.PNG'
+import beingSevakLogo from '../../beingsevaklogo.jpeg'
+import beingSevakName from '../../beingsevakname.jpg'
 
 function formatAmount(amount) {
   return Number(amount).toLocaleString('en-IN', {
@@ -24,7 +26,7 @@ export default function ReceiptTemplateBeingSevak({ donor, index, signature }) {
           margin: '0 auto',
           background: '#fff',
           padding: '40px',
-          border: '5.5px solid #00a3da',
+          border: '5.5px solid #1f497c',
           color: '#222',
           fontFamily: 'Arial, sans-serif',
           fontSize: '16px',
@@ -57,7 +59,7 @@ export default function ReceiptTemplateBeingSevak({ donor, index, signature }) {
       }}
     >
       {/* ===== TOP SECTION: Thank You Letter ===== */}
-      <div style={{ border: '5.5px solid #00a3da', background: '#fff' }}>
+      <div style={{ border: '5.5px solid #1f497c', background: '#fff' }}>
         <div
           style={{
             display: 'flex',
@@ -75,25 +77,20 @@ export default function ReceiptTemplateBeingSevak({ donor, index, signature }) {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              marginTop: '10px',
             }}
-          />
+          >
+            <img src={beingSevakLogo} alt="Logo" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
+          </div>
           <div style={{ textAlign: 'center', flex: 1 }}>
-            <div style={{ color: '#c0392b', fontStyle: 'italic', fontSize: '11px', marginBottom: '2px' }}>
+            <div style={{ color: '#c0392b',  fontSize: '11px', marginBottom: '2px' }}>
               We Rise By Lifting Others
             </div>
-            <div
-              style={{
-                fontSize: '22px',
-                fontWeight: 'bold',
-                color: '#1a2e6e',
-                letterSpacing: '1px',
-                fontFamily: "'Times New Roman', serif",
-                lineHeight: '1.2',
-              }}
-            >
-              <span style={{ fontSize: '26px', fontWeight: 900 }}>B</span>EING{' '}
-              <span style={{ fontSize: '26px', fontWeight: 900 }}>S</span>EVAK Charitable Trust
-            </div>
+            <img
+              src={beingSevakName}
+              alt="Being Sevak"
+              style={{ height: '40px', objectFit: 'contain', margin: '2px 120px' }}
+            />
             <div style={{ fontSize: '10px', color: '#c0392b', marginTop: '2px' }}>
               Charity Commissioner (Reg.) No. E-31948 | Income Tax, Exempted Under 80G No. AACTB6422FF20214
             </div>
@@ -188,7 +185,7 @@ export default function ReceiptTemplateBeingSevak({ donor, index, signature }) {
       <hr style={{ border: 'none', borderTop: '2px dashed #1a2e6e', margin: 0 }} />
 
       {/* ===== BOTTOM SECTION: Formal Receipt ===== */}
-      <div style={{ border: '5.5px solid #00a3da', background: '#fff' }}>
+      <div style={{ border: '5.5px solid #1f497c', background: '#fff' }}>
         <div
           style={{
             display: 'flex',
@@ -206,31 +203,35 @@ export default function ReceiptTemplateBeingSevak({ donor, index, signature }) {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              marginTop: '10px',
             }}
-          />
+          >
+            <img src={beingSevakLogo} alt="Logo" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', marginBottom: '65px' }} />
+          </div>
           <div style={{ textAlign: 'center', flex: 1 }}>
-            <div style={{ color: '#c0392b', fontStyle: 'italic', fontSize: '11px', marginBottom: '2px' }}>
+            <div style={{ color: '#c0392b',  fontSize: '11px', marginBottom: '2px' }}>
               Subject to Mumbai Jurisdiction
             </div>
-            <div
-              style={{
-                fontSize: '22px',
-                fontWeight: 'bold',
-                color: '#1a2e6e',
-                letterSpacing: '1px',
-                fontFamily: "'Times New Roman', serif",
-                lineHeight: '1.2',
-              }}
-            >
-              <span style={{ fontSize: '26px', fontWeight: 900 }}>B</span>EING{' '}
-              <span style={{ fontSize: '26px', fontWeight: 900 }}>S</span>EVAK Charitable Trust
-            </div>
+            <img
+              src={beingSevakName}
+              alt="Being Sevak"
+              style={{ height: '40px', objectFit: 'contain', margin: '2px 120px' }}
+            />
             <div style={{ fontSize: '10px', color: '#c0392b', marginTop: '2px' }}>
               Charity Commissioner (Reg.) No. E-31948, Certificate Under Section 80G of the Income Tax Act 1961
             </div>
             <div style={{ fontSize: '10px', color: '#c0392b' }}>
               * 80G Registration No. AACTB6422FF20214 &nbsp;*CSR Registration No. CSR00015528
             </div>
+            <p
+              style={{
+                fontWeight: 'bold',
+                fontSize: '10px',
+                marginTop: '6px',
+                borderTop: '1px solid #111',
+                paddingTop: '4px',
+              }}
+            ></p>
             <div style={{ fontSize: '9px', color: '#1a2e6e', marginTop: '2px' }}>
               Registered Add: 401, 4th Floor, 'A' Wing, New Delite Apartment, Chandavarkar Lane, Borivali (West),
               Mumbai - 92.
@@ -244,169 +245,102 @@ export default function ReceiptTemplateBeingSevak({ donor, index, signature }) {
           </div>
         </div>
 
-        <table style={{ width: '100%', borderCollapse: 'collapse', padding: 0, margin: '10px 0 0' }}>
+        <table style={{ width: '100%', borderCollapse: 'collapse', margin: '4px 0 0' }}>
           <tbody>
+
+            {/* Receipt No + Date */}
             <tr>
-              <td style={{ padding: '4px 8px 4px 14px', verticalAlign: 'bottom', fontSize: '12px', whiteSpace: 'nowrap' }}>
+              <td style={{ padding: '2px 4px 2px 6px', fontSize: '12px', whiteSpace: 'nowrap', verticalAlign: 'bottom' }}>
                 Receipt No.
               </td>
-              <td
-                style={{
-                  padding: '4px 8px 4px 0',
-                  verticalAlign: 'bottom',
-                  fontSize: '12px',
-                  borderBottom: '1px solid #555',
-                  minWidth: '60px',
-                }}
-              >
+
+              <td style={{ padding: '2px 4px', fontSize: '12px', borderBottom: '1px solid #555', verticalAlign: 'bottom', minWidth: '70px' }}>
                 {donor['Receipt No.']}
               </td>
-              <td
-                style={{
-                  padding: '4px 8px 4px 14px',
-                  verticalAlign: 'bottom',
-                  fontSize: '12px',
-                  whiteSpace: 'nowrap',
-                  textAlign: 'right',
-                }}
-              >
+
+              <td style={{ padding: '2px 4px 2px 6px', fontSize: '12px', whiteSpace: 'nowrap', textAlign: 'right', verticalAlign: 'bottom' }}>
                 Dated:
               </td>
-              <td
-                style={{
-                  padding: '4px 8px 4px 0',
-                  verticalAlign: 'bottom',
-                  fontSize: '12px',
-                  borderBottom: '1px solid #555',
-                  minWidth: '60px',
-                }}
-              >
+
+              <td style={{ padding: '2px 4px', fontSize: '12px', borderBottom: '1px solid #555', verticalAlign: 'bottom', minWidth: '70px' }}>
                 {formattedDate}
               </td>
             </tr>
+
+            {/* Donor Name */}
             <tr>
-              <td style={{ padding: '4px 8px 4px 14px', verticalAlign: 'bottom', fontSize: '12px', whiteSpace: 'nowrap' }}>
-                RECEIVED with thanks from Ms./Mr./Miss.
+              <td style={{ padding: '2px 4px 2px 6px', fontSize: '12px', whiteSpace: 'nowrap', verticalAlign: 'bottom' }}>
+                Received with thanks from
               </td>
-              <td
-                style={{
-                  padding: '4px 8px 4px 0',
-                  verticalAlign: 'bottom',
-                  fontSize: '12px',
-                  fontWeight: 'bold',
-                  borderBottom: '1px solid #555',
-                }}
-                colSpan={3}
-              >
+
+              <td colSpan={3} style={{ padding: '2px 4px', fontSize: '12px', fontWeight: 'bold', borderBottom: '1px solid #555', verticalAlign: 'bottom' }}>
                 {donor['Donor Name']}
               </td>
             </tr>
+
+            {/* Address */}
             <tr>
-              <td style={{ padding: '4px 8px 4px 14px', verticalAlign: 'bottom', fontSize: '12px', whiteSpace: 'nowrap' }}>
+              <td style={{ padding: '2px 4px 2px 6px', fontSize: '12px', whiteSpace: 'nowrap', verticalAlign: 'bottom' }}>
                 Address:
               </td>
-              <td
-                style={{
-                  padding: '4px 8px 4px 0',
-                  verticalAlign: 'bottom',
-                  fontSize: '12px',
-                  fontWeight: 'bold',
-                  borderBottom: '1px solid #555',
-                }}
-                colSpan={3}
-              >
+
+              <td colSpan={3} style={{ padding: '2px 4px', fontSize: '12px', fontWeight: 'bold', borderBottom: '1px solid #555' }}>
                 {donor['Address 1'] || 'NA'}
               </td>
             </tr>
+
+            {/* Amount */}
             <tr>
-              <td style={{ padding: '4px 8px 4px 14px', verticalAlign: 'bottom', fontSize: '12px', whiteSpace: 'nowrap' }}>
+              <td style={{ padding: '2px 4px 2px 6px', fontSize: '12px', whiteSpace: 'nowrap', verticalAlign: 'bottom' }}>
                 The Sum of Rupees:
               </td>
-              <td
-                style={{
-                  padding: '4px 8px 4px 0',
-                  verticalAlign: 'bottom',
-                  fontSize: '12px',
-                  fontWeight: 'bold',
-                  borderBottom: '1px solid #555',
-                }}
-                colSpan={3}
-              >
+
+              <td colSpan={3} style={{ padding: '2px 4px', fontSize: '12px', fontWeight: 'bold', borderBottom: '1px solid #555' }}>
                 Rupees {amountInWords(amount)}
               </td>
             </tr>
+
+            {/* Mode + Payment ID (tight single line) */}
             <tr>
-              <td style={{ padding: '4px 8px 4px 14px', verticalAlign: 'bottom', fontSize: '12px', whiteSpace: 'nowrap' }}>
-                Mode of Payment:
+              <td style={{ padding: '2px 4px 2px 6px', fontSize: '12px', whiteSpace: 'nowrap', verticalAlign: 'bottom' }}>
+               Payment Mode:
               </td>
-              <td
-                style={{
-                  padding: '4px 8px 4px 0',
-                  verticalAlign: 'bottom',
-                  fontSize: '12px',
-                  fontWeight: 'bold',
-                  borderBottom: '1px solid #555',
-                }}
-              >
+
+              <td style={{ padding: '2px 4px', fontSize: '12px', borderBottom: '1px solid #555', fontWeight: 'bold' }}>
                 {donor['Mode of Payment (MOP)']}
               </td>
-              <td
-                style={{
-                  padding: '4px 8px 4px 14px',
-                  verticalAlign: 'bottom',
-                  fontSize: '12px',
-                  whiteSpace: 'nowrap',
-                  textAlign: 'right',
-                }}
-              >
-                Payment ID No.:
+
+              <td style={{ padding: '2px 4px 2px 6px', fontSize: '12px', whiteSpace: 'nowrap', textAlign: 'right', verticalAlign: 'bottom' }}>
+                Payment ID:
               </td>
-              <td
-                style={{
-                  padding: '4px 8px 4px 0',
-                  verticalAlign: 'bottom',
-                  fontSize: '12px',
-                  fontWeight: 'bold',
-                  borderBottom: '1px solid #555',
-                }}
-              >
+
+              <td style={{ padding: '2px 4px', fontSize: '12px', borderBottom: '1px solid #555', fontWeight: 'bold' }}>
                 {donor['Payment ID No.']}
               </td>
             </tr>
+
+            {/* Bank */}
             <tr>
-              <td style={{ padding: '4px 8px 4px 14px', verticalAlign: 'bottom', fontSize: '12px', whiteSpace: 'nowrap' }}>
+              <td style={{ padding: '2px 4px 2px 6px', fontSize: '12px', whiteSpace: 'nowrap', verticalAlign: 'bottom' }}>
                 Bank Name:
               </td>
-              <td
-                style={{
-                  padding: '4px 8px 4px 0',
-                  verticalAlign: 'bottom',
-                  fontSize: '12px',
-                  fontWeight: 'bold',
-                  borderBottom: '1px solid #555',
-                }}
-              >
+
+              <td colSpan={3} style={{ padding: '2px 4px', fontSize: '12px', fontWeight: 'bold', borderBottom: '1px solid #555' }}>
                 {donor['Donor Bank Name'] || 'NA'}
               </td>
-              <td colSpan={2} />
             </tr>
+
+            {/* Account */}
             <tr>
-              <td style={{ padding: '4px 8px 4px 14px', verticalAlign: 'bottom', fontSize: '12px', whiteSpace: 'nowrap' }}>
+              <td style={{ padding: '2px 4px 2px 6px', fontSize: '12px', whiteSpace: 'nowrap', verticalAlign: 'bottom' }}>
                 On Account Of:
               </td>
-              <td
-                style={{
-                  padding: '4px 8px 4px 0',
-                  verticalAlign: 'bottom',
-                  fontSize: '12px',
-                  fontWeight: 'bold',
-                  borderBottom: '1px solid #555',
-                }}
-                colSpan={3}
-              >
+
+              <td colSpan={3} style={{ padding: '2px 4px', fontSize: '12px', fontWeight: 'bold', borderBottom: '1px solid #555' }}>
                 {donor['Account Of'] || 'Corpus'}
               </td>
             </tr>
+
           </tbody>
         </table>
 
@@ -421,58 +355,94 @@ export default function ReceiptTemplateBeingSevak({ donor, index, signature }) {
           }}
         >
           <div style={{ flex: 1 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px', flexWrap: 'wrap' }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                marginTop: '12px',
+                marginBottom: '12px',
+              }}
+            >
+              {/* Amount Label */}
               <span
                 style={{
                   fontWeight: 'bold',
                   fontSize: '14px',
-                  border: '1.5px solid #1a2e6e',
-                  display: 'inline-block',
-                  padding: '3px 8px',
-                  background: '#fff',
+                  color: '#1a2e6e',
+                  minWidth: '90px',
                 }}
               >
                 Amount (INR)
               </span>
-              <span style={{ fontWeight: 'bold', fontSize: '12px' }}>Rs.</span>
-              <span
+
+              {/* Amount Box */}
+              <div
                 style={{
-                  fontWeight: 'bold',
-                  fontSize: '14px',
-                  border: '1.5px solid #1a2e6e',
-                  padding: '2px 10px',
+                  display: 'flex',
+                  border: '2px solid #000',
+                  width: '170px',
+                  height: '42px',
                 }}
               >
-                {formatAmount(amount)}
-              </span>
+                <div
+                  style={{
+                    width: '50px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontWeight: 'bold',
+                    borderRight: '2px solid #000',
+                  }}
+                >
+                  Rs.
+                </div>
+
+                <div
+                  style={{
+                    flex: 1,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  {formatAmount(amount)}
+                </div>
+              </div>
+
+              {/* PAN Label */}
               <span
                 style={{
                   fontWeight: 'bold',
                   fontSize: '14px',
-                  border: '1.5px solid #1a2e6e',
-                  padding: '2px 6px',
                 }}
               >
                 PAN NO:
               </span>
-              <span
+
+              {/* PAN Value */}
+              <div
                 style={{
+                  border: '2px solid #000',
+                  width: '185px',
+                  height: '42px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                   fontWeight: 'bold',
-                  fontSize: '14px',
-                  border: '1.5px solid #1a2e6e',
-                  padding: '2px 20px',
                 }}
               >
                 {donor['PAN No.'] || 'NA'}
-              </span>
+              </div>
             </div>
-            <div style={{ fontSize: '9px', fontStyle: 'italic', color: '#333', marginBottom: '3px' }}>
+            <div style={{ fontSize: '9px', color: '#333', marginBottom: '3px' }}>
               Donation Payment is Subject to Realisation
             </div>
             <div style={{ fontSize: '11px', marginBottom: '3px' }}>
               Email ID: <span>{donor['Email ID'] || 'NA'}</span>
             </div>
-            <div style={{ fontSize: '12px', fontStyle: 'italic', textAlign: 'center', marginTop: '4px' }}>
+            <div style={{ fontSize: '12px', textAlign: 'center', marginTop: '4px' }}>
               ****This is system generated auto receipt****
             </div>
           </div>
@@ -489,7 +459,7 @@ export default function ReceiptTemplateBeingSevak({ donor, index, signature }) {
             <img
               src={signature || defaultStamp}
               alt="Seal"
-              style={{ width: '80px', height: '80px', objectFit: 'contain' }}
+              style={{ width: 'auto', height: '75px', objectFit: 'contain' }}
             />
             <div style={{ fontSize: '11px', textAlign: 'right', lineHeight: '1.5' }}>
               Authorised Sign.<br />

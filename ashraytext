@@ -6,40 +6,55 @@
 <title>80G Donation Receipt</title>
 
 <style>
+
+:root{
+    --primary:#8d636e;
+    --primary-dark:#6f4c55;
+    --secondary:#a87b85;
+    --light:#f7eef0;
+    --dark:#3d2a2f;
+    --border:#e6d6da;
+
+    /* Gradient Shades */
+    --gradient-1:#8d636e;
+    --gradient-2:#a87b85;
+    --gradient-3:#c9a6ad;
+}
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family:'Segoe UI',sans-serif;
 }
 
 body{
-    background:#e9e9e9;
-    padding:12px;
+    background:#edf3fa;
+    padding:20px;
 }
 
 .receipt{
     width:794px;
     min-height:1123px;
     margin:auto;
-    background:#f4f4f4;
-    border:4px solid #2a0000;
-    position:relative;
-}
-
-.receipt::before{
-    content:"";
-    position:absolute;
-    inset:4px;
-    border:2px solid #7d2d2d;
-    pointer-events:none;
+    background:#fff;
+    /* border-radius:18px; */
+    overflow:hidden;
+    box-shadow:0 15px 40px rgba(0,0,0,.12);
+    border:2px solid var(--primary);
 }
 
 .header{
     display:flex;
     align-items:center;
-    padding:8px;
-    border-bottom:3px solid #2a0000;
+    padding:20px;
+background: linear-gradient(
+    135deg,
+    #8d636e 0%,
+    #a87b85 50%,
+    #c9a6ad 100%
+);
+    color:#fff;
 }
 
 .logo-box{
@@ -48,7 +63,7 @@ body{
 }
 
 .logo-box img{
-    width:110px;
+    width:100px;
 }
 
 .org-info{
@@ -57,205 +72,230 @@ body{
 }
 
 .top-small{
-    color:#7d2d2d;
-    font-size:12px;
-    font-weight:bold;
+    font-size:13px;
+    letter-spacing:3px;
+    opacity:.9;
 }
 
 .org-title{
-    color:#8b2f2f;
-    font-size:26px;
+    font-size:30px;
     font-weight:800;
-    margin:2px 0;
+    margin:5px 0;
 }
 
 .org-desc{
-    color:#8b2f2f;
     font-size:11px;
-    line-height:1.3;
+    line-height:1.6;
 }
 
 .title-bar{
+    background:#e6d6da;
+    color:var(--primary);
     text-align:center;
-    font-weight:700;
-    color:#8b2f2f;
     font-size:24px;
-    padding:8px 0;
-    border-bottom:2px solid #000;
+    font-weight:800;
+    padding:14px;
+    border-bottom:2px solid var(--border);
+    letter-spacing:1px;
 }
 
 .section{
-    padding:10px;
+    padding:25px;
 }
 
 .row{
     display:flex;
     align-items:center;
-    margin:12px 0;
+    margin-bottom:18px;
+    flex-wrap:wrap;
 }
 
 .label{
-    font-size:15px;
-    font-weight:600;
+    font-weight:700;
+    color:var(--dark);
+    margin-right:8px;
 }
 
 .value-line{
-    border-bottom:4px solid #000;
-    min-height:24px;
-    padding:0 8px;
+    flex: 1;
+    width: 100%;
+    min-height: 28px;
+    padding: 4px 8px;
+    color: #222;
+    font-weight: 600;
+
+    border-bottom: 2px solid var(--secondary);
+    display: block;
 }
 
 .space{
     flex:1;
 }
 
-.w100{width:100px;}
 .w120{width:120px;}
-.w150{width:150px;}
 .w180{width:180px;}
-.w220{width:220px;}
-.w250{width:250px;}
 .w300{width:300px;}
 .w350{width:350px;}
 .w500{width:500px;}
 
 .amount-row{
     display:flex;
-    gap:25px;
-    margin-top:20px;
+    gap:20px;
+    margin-top:25px;
 }
 
-.amount-box{
-    width:240px;
-}
-
-.amount-inner{
-    border:3px solid #000;
-    height:50px;
-    display:flex;
-}
-
-.amount-inner div{
-    flex:1;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:22px;
-}
-
+.amount-box,
 .pan-box{
     flex:1;
 }
 
+.amount-inner,
 .pan-inner{
-    border:3px solid #000;
-    height:50px;
+    height:65px;
+    border-radius:12px;
+    border:2px solid var(--secondary);
+    background:#e6d6da;
     display:flex;
     align-items:center;
     justify-content:center;
-    font-size:20px;
+    font-size:24px;
+    font-weight:700;
+    color:var(--primary);
+}
+.row{
+    display:flex;
+    align-items:flex-end;
+    margin-bottom:18px;
+    flex-wrap:wrap;
+}
+
+.amount-inner div{
+    flex:1;
+    text-align:center;
 }
 
 .middle-section{
     display:flex;
     justify-content:space-between;
-    margin-top:20px;
+    align-items:center;
+    margin-top:30px;
 }
 
 .left-block{
     display:flex;
-    gap:15px;
+    align-items:center;
+    gap:20px;
 }
 
 .big-80g{
-    font-size:60px;
+    font-size:80px;
     font-weight:900;
-    color:#a03636;
+    color:var(--primary);
     line-height:1;
 }
 
 .donation-box{
-    width:280px;
-    border:3px solid #000;
-    padding:8px;
-    font-size:14px;
+    width:320px;
+    padding:15px;
+    border-radius:12px;
+    border:2px solid var(--secondary);
+    background:#e6d6da;
     line-height:1.8;
+    font-size:14px;
 }
 
 .right-block{
     text-align:center;
-    width:230px;
 }
 
 .stamp{
     width:120px;
-    margin-bottom:8px;
+    margin-bottom:10px;
 }
 
 .sign{
-    color:#8b2f2f;
-    font-size:18px;
+    font-size:17px;
     font-weight:700;
+    color:var(--primary);
 }
 
 .foundation{
-    color:#8b2f2f;
     font-size:18px;
     font-weight:800;
+    color:var(--dark);
 }
 
 .auto-receipt{
+    margin-top:25px;
     text-align:center;
-    margin:18px 0;
+    background:#e6d6da;
+    padding:12px;
+    border-radius:10px;
+    color:var(--primary);
     font-weight:700;
-    font-size:20px;
 }
 
 .message-box{
-    border-top:3px solid #000;
-    border-bottom:3px solid #000;
-    padding:10px;
+    margin:0 25px 25px;
+    border-radius:15px;
+    border:2px solid var(--border);
+    background:#e6d6da;
+    padding:25px;
 }
 
 .thanks{
     text-align:center;
-    color:#8b2f2f;
-    font-size:20px;
+    color:var(--primary);
+    font-size:24px;
     font-weight:800;
-    text-decoration:underline;
-    margin-bottom:12px;
+    margin-bottom:20px;
 }
 
 .message-box p{
+    margin-bottom:15px;
+    line-height:1.8;
+    color:#444;
     font-size:14px;
-    line-height:1.5;
-    margin-bottom:14px;
 }
 
 .subject{
     text-align:center;
     font-weight:700;
-    margin-top:10px;
+    color:var(--dark);
+    margin-top:20px;
 }
 
 .footer{
+    background: linear-gradient(
+    135deg,
+    #8d636e 0%,
+    #a87b85 50%,
+    #c9a6ad 100%
+);
+    color:#fff;
     text-align:center;
-    color:#8b2f2f;
-    font-weight:700;
+    padding:18px;
     font-size:12px;
-    padding:8px;
+    line-height:1.8;
 }
 
 @media print{
     body{
-        padding:0;
         background:#fff;
+        padding:0;
     }
 
     .receipt{
-        border:4px solid #2a0000;
+        box-shadow:none;
+        border-radius:0;
     }
 }
+
+
+
+
+
+
 </style>
 </head>
 <body>
@@ -265,7 +305,7 @@ body{
     <div class="header">
 
         <div class="logo-box">
-            <img src="logo.png" alt="Logo">
+            <img src="logoa.jpg" alt="Logo">
         </div>
 
         <div class="org-info">
@@ -359,27 +399,44 @@ body{
             <div class="amount-box">
 
                 <div class="label" style="margin-bottom:8px">
-                    Amount (INR)
+                    <!-- Amount (INR) -->
                 </div>
 
                 <div class="amount-inner">
-                    <div>Rs.</div>
-                    <div>500.00</div>
+                    <div>Amount (INR).</div>
+                    <div>Rs.500.00</div>
                 </div>
 
             </div>
 
-            <div class="pan-box">
+
+
+   <div class="amount-box">
 
                 <div class="label" style="margin-bottom:8px">
-                    PAN NO:
+                    <!-- Amount (INR) -->
+                </div>
+
+                <div class="amount-inner">
+                    <div> PAN NO.</div>
+                    <div>NA</div>
+                </div>
+
+            </div>
+
+
+
+            <!--<div class="pan-box">
+
+                <div class="label" style="margin-bottom:8px">
+                     PAN NO
                 </div>
 
                 <div class="pan-inner">
-                    NA
+                    PAN NO: NA
                 </div>
 
-            </div>
+            </div>-->
 
         </div>
 
