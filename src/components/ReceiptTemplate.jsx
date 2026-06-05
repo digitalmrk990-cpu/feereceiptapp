@@ -53,8 +53,15 @@ export default function ReceiptTemplate({ donor, index, signature }) {
       }}
     >
       {/* Top Title */}
-      <div style={{ textAlign: 'center', fontSize: '22px', fontWeight: 'bold', marginBottom: '20px' }}>
-        80G Certificate
+     <div
+        style={{
+          textAlign: 'center',
+          fontSize: '25px',
+          fontWeight: 'bold',
+          marginTop: '10px',
+        }}
+      >
+        80G CERTIFICATE OF DONATION
       </div>
 
       {/* Top Section */}
@@ -97,57 +104,7 @@ export default function ReceiptTemplate({ donor, index, signature }) {
       </div>
 
       {/* Donor Section */}
-      <div style={{ marginTop: '35px', lineHeight: '1.7', fontSize: '18px' }}>
-        Dear {donor['Donor Name'].toUpperCase()}
-        <br /><br />
-        Thank you for making a contribution of {formatIndianCurrency(amount)} to Mann Care Foundation.
-        <br />
-        Please keep this written acknowledgement of your donation for your tax records.
-      </div>
 
-      {/* Signature Section */}
-      <div
-        style={{
-          marginTop: '25px',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'flex-start',
-        }}
-      >
-        <img
-          src={signature || defaultSignature}
-          alt="Authorised Signatory"
-          style={{
-            width: '178px',
-            height: '',
-            display: 'block',
-            margin: 0,
-            padding: 0,
-            marginTop:'-16px'
-          }}
-        />
-
-        <div
-          style={{
-            marginTop: '-10px',
-            fontWeight: 'bold',
-            fontSize: '18px',
-            lineHeight: '1.2',
-          }}
-        >
-          For Mann Care Foundation
-        </div>
-
-        <div
-          style={{
-            marginTop: '2px',
-            fontSize: '16px',
-            lineHeight: '1.2',
-          }}
-        >
-          (Authorised Signatory)
-        </div>
-      </div>
 
       <hr style={{ margin: '25px 0 20px', border: 'none', borderTop: '1px solid #999' }} />
 
@@ -203,8 +160,18 @@ export default function ReceiptTemplate({ donor, index, signature }) {
           </tr>
         </tbody>
       </table>
+      <div style={{ marginTop: '35px', lineHeight: '1.7', fontSize: '18px' }}>
+        Dear {donor['Donor Name'].toUpperCase()}
+        <br /><br />
+        Thank You for Your Generous Support {formatIndianCurrency(amount)} On behalf of Mann Care Foundation, we sincerely thank you for your valuable contribution. Your generosity helps us continue our mission of supporting those in need and creating a positive impact in the community.
+        Thank you for being a part of this noble cause and helping us make a difference.
+        <br />
+        Please keep this written acknowledgement of your donation for your tax records.
+      </div>
 
-      <div style={{ fontSize: '18px', lineHeight: '1.8', marginBottom: '25px' }}>
+      {/* Signature Section */}
+
+      <div style={{ fontSize: '18px', lineHeight: '1.8', marginBottom: '25px', textAlign: 'justify', }}>
         Donations to <span style={{ color: '#d10087', fontWeight: 'bold' }}>Mann Care Foundation</span> qualify for deduction
         u/s 80G(5) of Income Tax Act 1961 vide Unique Registration Number
         MCF2026NPL471199 approved on 02 June 2026 which is valid till AY2026-27.
@@ -213,40 +180,78 @@ export default function ReceiptTemplate({ donor, index, signature }) {
         for any reason. IT PAN: <span style={{ color: '#d10087', fontWeight: 'bold' }}>AAUCM9048B.</span>
       </div>
 
-      <div style={{ fontSize: '18px', lineHeight: '1.8', marginBottom: '25px' }}>
+      <div style={{ fontSize: '18px', lineHeight: '1.8', marginBottom: '25px', textAlign: 'justify' }}>
         Please note that this is an acknowledgement for the receipt of donation.
         We will provide you the Form 10BE on which income-tax deduction can be
         claimed as per the income-tax rules.
       </div>
 
       <div style={{ fontSize: '18px', lineHeight: '1.8', marginBottom: '25px' }}>
-        This is a computer generated receipt. Incase of any discrepancy or queries
-        please email{' '}
+        This is a computer generated receipt. Incase of any discrepancy or queries please email{' '}
         <span style={{ color: '#d10087', fontWeight: 'bold' }}>manncarefoundation@gmail.com</span>
       </div>
+
+      <div
+        style={{
+          marginTop: '25px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+        }}
+      >
+        <img
+          src={signature || defaultSignature}
+          alt="Authorised Signatory"
+          style={{
+            width: '178px',
+            height: '',
+            display: 'block',
+            margin: 0,
+            padding: 0,
+            marginTop: '-16px'
+          }}
+        />
+
+        <div
+          style={{
+            marginTop: '-10px',
+            fontWeight: 'bold',
+            fontSize: '18px',
+            lineHeight: '1.2',
+          }}
+        >
+          For Mann Care Foundation
+        </div>
+
+        <div
+          style={{
+            marginTop: '2px',
+            fontSize: '16px',
+            lineHeight: '1.2',
+          }}
+        >
+          (Authorised Signatory)
+        </div>
+      </div>
+
 
       {/* Footer */}
       <div style={{ borderTop: '1px solid #999', marginTop: '30px', paddingTop: '25px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', textAlign: 'center', marginBottom: '20px' }}>
-          <div style={{ width: '24%', fontSize: '15px', lineHeight: '1.6' }}>
-            <b>Registered Office:</b><br />
-            1708, One World, S.V. Road,<br />
-            Near N.M. High School, <br /> Malad (West),<br />
-            Mumbai - 400064
-          </div>
-          <div style={{ width: '24%', fontSize: '15px', lineHeight: '1.6' }}>
+
+          {/* <div style={{ width: '24%', fontSize: '15px', lineHeight: '1.6' }}>
             <b>Helpline Number</b><br />
             +91 70390 06300<br />
             +91 70390 06400
-          </div>
-          <div style={{ width: '24%', fontSize: '15px', lineHeight: '1.6' }}>
+          </div> */}
+          {/* <div style={{ width: '24%', fontSize: '15px', lineHeight: '1.6' }}>
             <b>Email</b><br />
             manncarefoundation@gmail.com
-          </div>
-          <div style={{ width: '24%', fontSize: '15px', lineHeight: '1.6' }}>
+          </div> */}
+          {/* <div style={{ width: '24%', fontSize: '15px', lineHeight: '1.6' }}>
             <b>Website</b><br />
             www.manncarefoundation.org
-          </div>
+          </div> */}
         </div>
       </div>
 
@@ -290,19 +295,14 @@ export default function ReceiptTemplate({ donor, index, signature }) {
         >
           Helpline Number MANN: +91 7039006300 / +91 7039006400
         </div>
+        <div style={{ width: '100%', fontSize: '18px', lineHeight: '1.6' }}>
+          <b>Registered Office  :</b> <s /><s />
+          1708, One World, S.V. Road,
+          Near N.M. High School,  Malad (West),Mumbai - 400064
+        </div>
       </div>
 
-      <div
-        style={{
-          textAlign: 'center',
-          color: '#d10087',
-          fontSize: '30px',
-          fontWeight: 'bold',
-          marginTop: '20px',
-        }}
-      >
-        80G CERTIFICATE OF DONATION
-      </div>
+      
     </div>
   )
 }
