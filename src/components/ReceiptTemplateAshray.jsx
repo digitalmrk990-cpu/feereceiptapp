@@ -38,14 +38,14 @@ const ORG = {
   // },
 }
 
-const primary = '#8d636e'
-const primaryDark = '#6f4c55'
-const secondary = '#a87b85'
-const light = '#f7eef0'
-const dark = '#3d2a2f'
-const borderColor = '#e6d6da'
+const primary = '#4A6FA5'
+const primaryDark = '#3A5A8A'
+const secondary = '#6B8FC4'
+const light = '#EDF2F9'
+const dark = '#2C3E50'
+const borderColor = '#D4E0F0'
 
-const grad = 'linear-gradient(135deg, #8d636e 0%, #a87b85 50%, #c9a6ad 100%)'
+const grad = 'linear-gradient(135deg, #4A6FA5 0%, #6B8FC4 50%, #8FB4D8 100%)'
 
 export default function ReceiptTemplateAshray({ donor, index, signature, project }) {
   const formattedDate = getFormattedDate()
