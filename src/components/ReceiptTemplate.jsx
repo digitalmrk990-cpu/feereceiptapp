@@ -53,7 +53,7 @@ export default function ReceiptTemplate({ donor, index, signature }) {
       }}
     >
       {/* Top Title */}
-     <div
+      <div
         style={{
           textAlign: 'center',
           fontSize: '25px',
@@ -61,7 +61,7 @@ export default function ReceiptTemplate({ donor, index, signature }) {
           marginTop: '10px',
         }}
       >
-        80G CERTIFICATE OF DONATION
+        CERTIFICATE OF DONATION
       </div>
 
       {/* Top Section */}
@@ -71,10 +71,10 @@ export default function ReceiptTemplate({ donor, index, signature }) {
           <br /><br />
           {formattedDate}
           <br /><br />
-        <span style={{ fontWeight: 'bold' }}>
-  {donor['Donor Name'].toUpperCase()}
-</span>
-<br />
+          <span style={{ fontWeight: 'bold' }}>
+            {donor['Donor Name'].toUpperCase()}
+          </span>
+          <br />
           {donor['Address 1']}<br />
           {[donor['City'], donor['State'], donor['Pincode']].some(Boolean) && (
             <>{donor['City']}{donor['City'] && donor['State'] ? ', ' : ''}{donor['State']}{donor['State'] && donor['Pincode'] ? ' - ' : ''}{donor['Pincode']}<br /></>
@@ -102,7 +102,7 @@ export default function ReceiptTemplate({ donor, index, signature }) {
             Mann Care Foundation
           </div>
           <div style={{ color: '#d10087', lineHeight: '1.8', fontSize: '18px' }}>
-            80G Registration <br/>
+            {/* 80G Registration <br /> */}
             CIN No : U88900MH2026NPL471199<br />
             TAN No : MUMM75033A<br />
             Trust PAN Card No : AAUCM9048B
@@ -163,7 +163,8 @@ export default function ReceiptTemplate({ donor, index, signature }) {
           </tr>
           <tr>
             <td style={{ border: '1px solid #666', padding: '15px' }}>Total Contribution Received (Words)</td>
-            <td style={{ border: '1px solid #666', padding: '15px' }}>Rupees {amountInWords(amount)}</td>
+            <td style={{ border: '1px solid #666', padding: '15px' }}>{amountInWords(amount)}{' '}Rupees and No.
+              Paise Only</td>
           </tr>
         </tbody>
       </table>
@@ -179,9 +180,7 @@ export default function ReceiptTemplate({ donor, index, signature }) {
       {/* Signature Section */}
 
       <div style={{ fontSize: '18px', lineHeight: '1.8', marginBottom: '25px', textAlign: 'justify', }}>
-        Donations to <span style={{ color: '#d10087', fontWeight: 'bold' }}>Mann Care Foundation</span> qualify for deduction
-        u/s 80G(5) of Income Tax Act 1961 vide Unique Registration Number
-        MCF2026NPL471199 approved on 02 June 2026 which is valid till AY2026-27.
+        Donations to <span style={{ color: '#d10087', fontWeight: 'bold' }}>Mann Care Foundation</span> will qualify for deduction under Section 80G(5) of the Income Tax Act, 1961, subject to approval and registration under Section 80G by the Income Tax Department.
         This receipt is invalid in case of non-realization of the money instrument
         or reversal of the credit/debit card charge or reversal of donation amount
         for any reason. IT PAN : <span style={{ color: '#d10087', fontWeight: 'bold' }}>AAUCM9048B.</span>
@@ -190,7 +189,7 @@ export default function ReceiptTemplate({ donor, index, signature }) {
       <div style={{ fontSize: '18px', lineHeight: '1.8', marginBottom: '25px', textAlign: 'justify' }}>
         Please note that this is an acknowledgement for the receipt of donation.
         We will provide you the Form 10BE on which income-tax deduction can be
-        claimed as per the income-tax rules.
+        claimed as per the income-tax rules Subject to Approval from income tax department.
       </div>
 
       <div style={{ fontSize: '18px', lineHeight: '1.8', marginBottom: '25px' }}>
@@ -307,20 +306,30 @@ export default function ReceiptTemplate({ donor, index, signature }) {
           1708, One World, S.V. Road,
           Near N.M. High School,  Malad (West),Mumbai - 400064
         </div>
-        
+
       </div>
+      <div
+        style={{
+          marginTop: '10px',
+          textAlign: 'center',
+          fontSize: '15px',
+          fontWeight: '600',
+          color: '#050000'
+        }}
+      >
+        Subject to Mumbai Jurisdiction 
         <div
-  style={{
-    marginTop: '10px',
-    textAlign: 'center',
-    fontSize: '20px',
-    fontWeight: '600',
-    color: '#050000'
-  }}
->
-  Subject to Mumbai Jurisdiction
-</div>
-      
+        style={{
+          marginTop: '10px',
+          textAlign: 'center',
+          fontSize: '10px',
+          fontWeight: '600',
+          color: '#050000'
+        }}
+      ></div>
+        Donation Payment is Subject to Realisation
+      </div>
+
     </div>
   )
 }
