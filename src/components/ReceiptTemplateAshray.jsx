@@ -16,7 +16,7 @@ const ORG = {
     csrReg: 'CSR Registration No : CSR00069515',
     panCard: 'PAN CARD No : AAJTA4535B',
     address:
-      'Unit - 218, 2nd Floor, Meter No.2, Auris Galleria, New Link Road, Auris Serenity, Malad (West), Mumbai - 400064.',
+      'Unit - 218, 2nd Floor, Auris Galleria, New Link Road, Auris Serenity, Malad (West), Mumbai - 400064.',
     website: 'www.aflf.org',
     email: 'ashray.foundation22@gmail.com',
     helpline: '*9930028300 *9930028200',
@@ -258,7 +258,7 @@ export default function ReceiptTemplateAshray({ donor, index, signature, project
               borderBottom: `2px solid ${secondary}`,
             }}
           >
-            {amountInWords(amount)} Only
+            {amountInWords(amount)} {''}Rupees and No. Paise Only
           </div>
         </div>
 
@@ -392,8 +392,12 @@ export default function ReceiptTemplateAshray({ donor, index, signature, project
           color: primary,
           fontWeight: 700,
         }}>
+          Donation Payment is Subject to Realisation
+          <br/>
+
           ****This is system generated auto receipt****
         </div>
+        
       </div>
 
       {/* Message Box */}
