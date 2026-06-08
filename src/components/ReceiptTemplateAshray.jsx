@@ -19,7 +19,7 @@ const ORG = {
       'Unit - 218, 2nd Floor, Auris Galleria, New Link Road, Auris Serenity, Malad (West), Mumbai - 400064.',
     website: 'www.aflf.org',
     email: 'ashray.foundation22@gmail.com',
-    helpline: '*9930028300 *9930028200',
+    helpline: ' 9930028300 / 9930028200',
     donorEmail: 'donorcare@aflf.org',
   },
   // beingsevak: {

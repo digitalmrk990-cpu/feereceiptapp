@@ -75,7 +75,7 @@ export default function ReceiptTemplate({ donor, index, signature }) {
             {donor['Donor Name'].toUpperCase()}
           </span>
           <br />
-          {donor['Address 1']}<br />
+        Address. - {donor['Address 1']}<br />
           {[donor['City'], donor['State'], donor['Pincode']].some(Boolean) && (
             <>{donor['City']}{donor['City'] && donor['State'] ? ', ' : ''}{donor['State']}{donor['State'] && donor['Pincode'] ? ' - ' : ''}{donor['Pincode']}<br /></>
           )}
