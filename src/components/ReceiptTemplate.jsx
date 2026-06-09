@@ -70,10 +70,10 @@ export default function ReceiptTemplate({ donor, index, signature }) {
         <div style={{ width: '50%', lineHeight: '1.6', fontSize: '16px' }}>
           <b>Receipt No.:</b> {donor['Receipt No.']}
           <br /><br />
-          {formattedDate}
+         Dated : - {formattedDate}
           <br /><br />
           <span style={{ fontWeight: 'bold' }}>
-            {donor['Donor Name'].toUpperCase()}
+           Name : - {donor['Donor Name'].toUpperCase()}
           </span>
           <br />
         Address. - {donor['Address 1']}<br />
