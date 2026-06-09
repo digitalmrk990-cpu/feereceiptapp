@@ -91,7 +91,7 @@ export default function ReceiptTemplateBeingSevak({ donor, index, signature }) {
 
         {/* Body */}
         <div style={{ marginTop: '18px', fontSize: '14px', lineHeight: '1.7', color: '#222' }}>
-          <p><strong>NAME: &nbsp;&nbsp;<span>{donor['Donor Name']}</span></strong></p>
+          <p><strong>Name: &nbsp;&nbsp;<span>{donor['Donor Name']}</span></strong></p>
           <p>Dear Sir/Madam,</p>
           <p>
             <strong style={{ color: ACCENT }}>Being Sevak Charitable Trust</strong>, would like to thank you for your generous donation of
