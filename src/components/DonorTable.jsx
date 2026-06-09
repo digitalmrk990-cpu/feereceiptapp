@@ -13,6 +13,7 @@ const HEADERS = [
   { key: 'Donor Bank Name', label: 'Bank Name' },
   { key: 'Amount', label: 'Amount' },
   { key: 'Receipt No.', label: 'Receipt No.' },
+  { key: 'Receipt Date', label: 'Date' },
   { key: 'Account Of', label: 'Account Of' },
 ]
 

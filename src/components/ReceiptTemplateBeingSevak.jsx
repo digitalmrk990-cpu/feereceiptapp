@@ -2,6 +2,7 @@ import {
   formatIndianCurrency,
   amountInWords,
   getFormattedDate,
+  formatReceiptDate,
 } from '../services/pdfGenerator'
 import beingSevakLogo from '../../beingsevaklogo.jpeg'
 import beingSevakName from '../../logo3.jpeg'
@@ -17,7 +18,7 @@ function formatAmount(amount) {
 }
 
 export default function ReceiptTemplateBeingSevak({ donor, index, signature }) {
-  const formattedDate = getFormattedDate()
+  const formattedDate = formatReceiptDate(donor['Receipt Date'])
   const amount = Number(donor['Amount']) || 0
 
   if (donor._dataMissing) {

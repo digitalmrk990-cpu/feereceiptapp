@@ -2,12 +2,13 @@ import {
   formatIndianCurrency,
   amountInWords,
   getFormattedDate,
+  formatReceiptDate,
 } from '../services/pdfGenerator'
 import defaultSignature from '../../stamp.png'
 import MancareLogo from '../../MAANCareLogo.jpeg'
 
 export default function ReceiptTemplate({ donor, index, signature }) {
-  const formattedDate = getFormattedDate()
+  const formattedDate = formatReceiptDate(donor['Receipt Date'])
   const amount = Number(donor['Amount']) || 0
 
   if (donor._dataMissing) {
@@ -70,7 +71,7 @@ export default function ReceiptTemplate({ donor, index, signature }) {
         <div style={{ width: '50%', lineHeight: '1.6', fontSize: '16px' }}>
           <b>Receipt No.:</b> {donor['Receipt No.']}
           <br /><br />
-         Dated : - {formattedDate}
+         Dated : {formattedDate}
           <br /><br />
           <span style={{ fontWeight: 'bold' }}>
            Name : - {donor['Donor Name'].toUpperCase()}

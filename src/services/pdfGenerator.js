@@ -55,11 +55,57 @@ export function amountInWords(amount) {
   return res.trim() + ''
 }
 
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December']
+
 export function getFormattedDate() {
   const d = new Date()
-  const months = ['January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December']
-  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`
+  return `${d.getDate()} ${MONTHS[d.getMonth()]} ${d.getFullYear()}`
+}
+
+const MONTHS_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+  'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+function parseMonthName(s) {
+  if (!s) return -1
+  const lower = s.toLowerCase()
+  for (let i = 0; i < MONTHS_SHORT.length; i++) {
+    if (MONTHS_SHORT[i].toLowerCase() === lower) return i + 1
+  }
+  return -1
+}
+
+export function formatReceiptDate(dateStr) {
+  if (!dateStr || String(dateStr).trim() === '') return getFormattedDate()
+  const raw = String(dateStr).trim()
+
+  let parts = raw.match(/^(\d{1,2})[/-](\d{1,2})[/-](\d{2,4})$/)
+  if (parts) {
+    let [, d, m, y] = parts
+    if (y.length === 2) y = '20' + y
+    const day = parseInt(d, 10)
+    const month = parseInt(m, 10)
+    const year = parseInt(y, 10)
+    if (month >= 1 && month <= 12 && day >= 1 && day <= 31) {
+      return `${day}-${MONTHS_SHORT[month - 1]}-${year}`
+    }
+  }
+
+  parts = raw.match(/^(\d{1,2})[/-]([A-Za-z]{3})[/-](\d{2,4})$/)
+  if (parts) {
+    let [, d, m, y] = parts
+    if (y.length === 2) y = '20' + y
+    const day = parseInt(d, 10)
+    const month = parseMonthName(m)
+    const year = parseInt(y, 10)
+    if (month >= 1 && month <= 12 && day >= 1 && day <= 31) {
+      return `${day}-${MONTHS_SHORT[month - 1]}-${year}`
+    }
+  }
+
+  const d = new Date(raw)
+  if (isNaN(d.getTime())) return raw
+  return `${d.getDate()}-${MONTHS_SHORT[d.getMonth()]}-${d.getFullYear()}`
 }
 
 export async function generateReceiptPDF(element) {

@@ -2,6 +2,7 @@ import {
   formatIndianCurrency,
   amountInWords,
   getFormattedDate,
+  formatReceiptDate,
 } from '../services/pdfGenerator'
 import ashrayLogo from '../../ahsraylogo.png'
 import ashrayStamp from '../../ashraystamp.PNG'
@@ -48,7 +49,7 @@ const borderColor = '#D4E0F0'
 const grad = 'linear-gradient(135deg, #4A6FA5 0%, #6B8FC4 50%, #8FB4D8 100%)'
 
 export default function ReceiptTemplateAshray({ donor, index, signature, project }) {
-  const formattedDate = getFormattedDate()
+  const formattedDate = formatReceiptDate(donor['Receipt Date'])
   const amount = Number(donor['Amount']) || 0
   const org = ORG[project] || ORG.ashray
 
