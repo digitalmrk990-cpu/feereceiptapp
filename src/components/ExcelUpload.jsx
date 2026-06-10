@@ -89,7 +89,7 @@ export default function ExcelUpload({ onDataLoaded }) {
       reader.onload = (e) => {
         try {
           const data = new Uint8Array(e.target.result)
-          const workbook = XLSX.read(data, { type: 'array', cellDates: true })
+          const workbook = XLSX.read(data, { type: 'array' })
           const firstSheet = workbook.Sheets[workbook.SheetNames[0]]
           const jsonData = XLSX.utils.sheet_to_json(firstSheet, { defval: '' })
 
@@ -120,9 +120,7 @@ export default function ExcelUpload({ onDataLoaded }) {
               for (const col of TARGET_COLUMNS) {
                 const sheetCol = columnMap[col.key]
                 const val = row[sheetCol]
-                entry[col.key] = col.key === 'Receipt Date' && val instanceof Date
-                  ? val
-                  : String(val ?? '').trim()
+                entry[col.key] = String(val ?? '').trim()
               }
 
               const hasMissingMandatory = MANDATORY.some(
