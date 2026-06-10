@@ -123,20 +123,25 @@ function formatDateFromParts(day, month, year) {
   return `${day}-${MONTHS_SHORT[month - 1]}-${shortYear}`
 }
 
+function formatInIndianTimezone(d) {
+  const ms = d.getTime()
+  const indianOffset = 5.5 * 60 * 60 * 1000
+  const local = new Date(ms + indianOffset)
+  const sy = String(local.getUTCFullYear()).slice(-2)
+  return `${local.getUTCDate()}-${MONTHS_SHORT[local.getUTCMonth()]}-${sy}`
+}
+
 export function formatReceiptDate(dateStr) {
   if (!dateStr || String(dateStr).trim() === '') return getFormattedDate()
 
   if (dateStr instanceof Date) {
-    const d = dateStr
-    const sy = String(d.getUTCFullYear()).slice(-2)
-    return `${d.getUTCDate()}-${MONTHS_SHORT[d.getUTCMonth()]}-${sy}`
+    return formatInIndianTimezone(dateStr)
   }
 
   if (typeof dateStr === 'number') {
     const d = new Date((dateStr - 25569) * 86400000)
     if (!isNaN(d.getTime())) {
-      const sy = String(d.getUTCFullYear()).slice(-2)
-      return `${d.getUTCDate()}-${MONTHS_SHORT[d.getUTCMonth()]}-${sy}`
+      return formatInIndianTimezone(d)
     }
   }
 
@@ -146,8 +151,7 @@ export function formatReceiptDate(dateStr) {
   if (/^\d{5}$/.test(numeric)) {
     const d = new Date((parseInt(numeric, 10) - 25569) * 86400000)
     if (!isNaN(d.getTime())) {
-      const sy = String(d.getUTCFullYear()).slice(-2)
-      return `${d.getUTCDate()}-${MONTHS_SHORT[d.getUTCMonth()]}-${sy}`
+      return formatInIndianTimezone(d)
     }
   }
 
@@ -156,8 +160,7 @@ export function formatReceiptDate(dateStr) {
 
   const d = new Date(raw)
   if (!isNaN(d.getTime())) {
-    const sy = String(d.getFullYear()).slice(-2)
-    return `${d.getDate()}-${MONTHS_SHORT[d.getMonth()]}-${sy}`
+    return formatInIndianTimezone(d)
   }
 
   return raw
