@@ -53,6 +53,8 @@ export default function ReceiptTemplateAshray({ donor, index, signature, project
   const amount = Number(donor['Amount']) || 0
   const org = ORG[project] || ORG.ashray
 
+
+
   if (donor._dataMissing) {
     return (
       <div

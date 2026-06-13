@@ -273,10 +273,9 @@ export default function ReceiptTemplateBeingSevak({ donor, index, signature }) {
                 }}
                 colSpan="3"
               >
-                {donor['Address 1'] || 'NA'}
+                {donor['Address 1'] || 'NA'}{' , '}
                 {[donor['City'], donor['State'], donor['Pincode']].some(Boolean) && (
                   <>
-                    <br />
                     {donor['City']}
                     {donor['City'] && donor['State'] ? ', ' : ''}
                     {donor['State']}

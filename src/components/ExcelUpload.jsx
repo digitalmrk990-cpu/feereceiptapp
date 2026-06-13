@@ -63,6 +63,75 @@ function isEmptyRow(row) {
   )
 }
 
+const INDIAN_STATES = [
+  'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh',
+  'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jharkhand',
+  'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur',
+  'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab',
+  'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura',
+  'Uttar Pradesh', 'Uttarakhand', 'West Bengal',
+  'Andaman and Nicobar Islands', 'Chandigarh', 'Dadra and Nagar Haveli and Daman and Diu',
+  'Delhi', 'Jammu and Kashmir', 'Ladakh', 'Lakshadweep', 'Puducherry',
+]
+
+function parseAddressParts(raw) {
+  if (!raw) return { address: '', city: '', state: '', pincode: '' }
+
+  let addr = raw.trim()
+
+  let pin = ''
+  const pinMatch = addr.match(/(\d{6})\s*$/)
+  if (pinMatch) {
+    pin = pinMatch[1]
+    addr = addr.slice(0, pinMatch.index).trim().replace(/[,]+$/, '').trim()
+  }
+
+  const parts = addr.split(',').map(p => p.trim()).filter(Boolean)
+
+  let foundState = '', foundCity = ''
+  let stateIdx = -1
+  const stateLowerMap = {}
+  INDIAN_STATES.forEach(s => { stateLowerMap[s.toLowerCase()] = s })
+
+  for (let i = parts.length - 1; i >= 0; i--) {
+    const part = parts[i].toLowerCase()
+    if (stateLowerMap[part]) {
+      foundState = stateLowerMap[part]
+      stateIdx = i
+      if (i + 1 < parts.length) foundCity = parts[i + 1]
+      else if (i > 0) foundCity = parts[i - 1]
+      break
+    }
+    for (const [lowerState, origState] of Object.entries(stateLowerMap)) {
+      if (part.startsWith(lowerState)) {
+        foundState = origState
+        stateIdx = i
+        const remaining = parts[i].slice(lowerState.length).trim().replace(/^[, ]+/, '')
+        if (remaining) foundCity = remaining
+        else if (i + 1 < parts.length) foundCity = parts[i + 1]
+        else if (i > 0) foundCity = parts[i - 1]
+        break
+      }
+    }
+    if (foundState) break
+  }
+
+  // Clean address: remove state, city, and pincode parts
+  let cleanParts = [...parts]
+  if (pin) cleanParts = cleanParts.filter(p => !p.includes(pin))
+  if (foundCity) cleanParts = cleanParts.filter(p => p !== foundCity)
+  if (foundState) cleanParts = cleanParts.filter(p => p.toLowerCase() !== foundState.toLowerCase())
+
+  const cleaned = cleanParts.join(', ') || raw
+
+  return {
+    address: cleaned,
+    city: foundCity || '',
+    state: foundState || '',
+    pincode: pin || '',
+  }
+}
+
 export default function ExcelUpload({ onDataLoaded }) {
   const inputRef = useRef(null)
   const [dragOver, setDragOver] = useState(false)
@@ -121,6 +190,23 @@ export default function ExcelUpload({ onDataLoaded }) {
                 const sheetCol = columnMap[col.key]
                 const val = row[sheetCol]
                 entry[col.key] = String(val ?? '').trim()
+              }
+
+              // Always parse City, State, Pincode from Address 1
+              const parsed = parseAddressParts(entry['Address 1'])
+
+              // Also check if Excel has separate columns (use them only if parsing failed)
+              const rawCity = String(row['City'] ?? row['city'] ?? '').trim()
+              const rawState = String(row['State'] ?? row['state'] ?? '').trim()
+              const rawPin = String(row['Pincode'] ?? row['pincode'] ?? row['Pin Code'] ?? row['Pin code'] ?? '').trim()
+
+              entry['City'] = parsed.city || rawCity || ''
+              entry['State'] = parsed.state || rawState || ''
+              entry['Pincode'] = parsed.pincode || rawPin || ''
+
+              // Clean Address 1 to only show area/street part (avoid duplicate with city/state/pincode)
+              if (parsed.address && (parsed.city || parsed.state || parsed.pincode)) {
+                entry['Address 1'] = parsed.address
               }
 
               const hasMissingMandatory = MANDATORY.some(
